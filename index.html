@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maryam Shafaei | Personal Website</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #101827;
+  color: #f4f4f5;
+  line-height: 1.8;
+}
+
+header {
+  padding: 22px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #293548;
+}
+
+.logo {
+  color: #b9a3ff;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+nav a {
+  color: #ddd;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+.hero {
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 50px 20px;
+  background: radial-gradient(circle at top, #29365c, #101827 65%);
+}
+
+.hero h1 {
+  font-size: clamp(32px, 7vw, 55px);
+  margin-bottom: 15px;
+}
+
+.hero h1 span {
+  color: #b9a3ff;
+}
+
+.hero p {
+  color: #c4c8d3;
+  max-width: 550px;
+  margin-bottom: 28px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 25px;
+  border-radius: 30px;
+  background: #9b83ed;
+  color: white;
+  text-decoration: none;
+}
+
+section {
+  padding: 65px 9%;
+}
+
+h2 {
+  color: #c0adff;
+  margin-bottom: 20px;
+  font-size: 26px;
+}
+
+.about {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #1c293c;
+  border: 1px solid #34415a;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.card h3 {
+  color: #c0adff;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #c4c8d3;
+  font-size: 14px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  border-top: 1px solid #293548;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Maryam Shafaei</div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>Hello, I'm <span>Maryam</span></h1>
+  <p>
+    Welcome to my personal website.
+    A space where I share my interests,
+    ideas, learning journey, and creative projects.
+  </p>
+  <a class="btn" href="#about">Discover More</a>
+</div>
+
+<section id="about">
+  <div class="about">
+    <h2>About Me</h2>
+    <p>
+      I am passionate about learning, technology,
+      artificial intelligence, and creative thinking.
+      This website is a place to explore my interests,
+      document my journey, and share my projects.
+    </p>
+  </div>
+</section>
+
+<section id="projects">
+  <h2>Interests & Projects</h2>
+
+  <div class="projects">
+
+    <div class="card">
+      <h3>Artificial Intelligence</h3>
+      <p>
+        Exploring AI tools, technologies,
+        and their creative applications.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Learning & Development</h3>
+      <p>
+        Discovering new skills and continuously
+        expanding my knowledge.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Creative Ideas</h3>
+      <p>
+        Turning interesting ideas into
+        creative and meaningful projects.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  © 2026 Maryam Shafaei. All Rights Reserved.
+</footer>
+
+</body>
+</html>

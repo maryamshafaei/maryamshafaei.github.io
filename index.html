@@ -1,508 +1,198 @@
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Medical Blood Test Assistant</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Vazirmatn for Persian & Inter for English/others -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- html2pdf Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'Vazirmatn', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maryam Shafaei | Personal Website</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #101827;
+  color: #f4f4f5;
+  line-height: 1.8;
+}
+
+header {
+  padding: 22px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #293548;
+}
+
+.logo {
+  color: #b9a3ff;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+nav a {
+  color: #ddd;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+.hero {
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 50px 20px;
+  background: radial-gradient(circle at top, #29365c, #101827 65%);
+}
+
+.hero h1 {
+  font-size: clamp(32px, 7vw, 55px);
+  margin-bottom: 15px;
+}
+
+.hero h1 span {
+  color: #b9a3ff;
+}
+
+.hero p {
+  color: #c4c8d3;
+  max-width: 550px;
+  margin-bottom: 28px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 25px;
+  border-radius: 30px;
+  background: #9b83ed;
+  color: white;
+  text-decoration: none;
+}
+
+section {
+  padding: 65px 9%;
+}
+
+h2 {
+  color: #c0adff;
+  margin-bottom: 20px;
+  font-size: 26px;
+}
+
+.about {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #1c293c;
+  border: 1px solid #34415a;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.card h3 {
+  color: #c0adff;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #c4c8d3;
+  font-size: 14px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  border-top: 1px solid #293548;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+</style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between">
 
-    <!-- Header -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="bg-blue-600 text-white p-2.5 rounded-xl shadow-md">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                </div>
-                <div>
-                    <h1 class="text-lg font-bold text-slate-900">MediAI Lab Assistant</h1>
-                    <p class="text-xs text-slate-500">Multi-Agent Blood Test Analysis & Insights</p>
-                </div>
-            </div>
-            <div class="text-xs bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full font-medium border border-blue-100 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-                4-Agent Pipeline Active
-            </div>
-        </div>
-    </header>
+<body>
 
-    <!-- Main Container -->
-    <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
-        
-        <!-- Intro Card -->
-        <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-2xl p-6 md:p-8 mb-8 shadow-xl relative overflow-hidden">
-            <div class="absolute right-0 top-0 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
-            <h2 class="text-2xl font-bold mb-3">Intelligent Blood Test Analysis</h2>
-            <p class="text-blue-100 text-sm md:text-base leading-relaxed max-w-2xl mb-6">
-                Upload your lab report or test data. Our 4-stage AI Agent pipeline extracts parameters, flags out-of-range values, provides safe clinical context, and generates a structured multi-language PDF report.
-            </p>
-            <div class="flex flex-wrap gap-2 text-xs">
-                <span class="bg-white/10 px-3 py-1.5 rounded-lg border border-white/10">🤖 Agent 1: OCR & Extraction</span>
-                <span class="bg-white/10 px-3 py-1.5 rounded-lg border border-white/10">📊 Agent 2: Range Validator</span>
-                <span class="bg-white/10 px-3 py-1.5 rounded-lg border border-white/10">🩺 Agent 3: Clinical Context</span>
-                <span class="bg-white/10 px-3 py-1.5 rounded-lg border border-white/10">📄 Agent 4: Multi-lang PDF Builder</span>
-            </div>
-        </div>
+<header>
+  <div class="logo">Maryam Shafaei</div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+  </nav>
+</header>
 
-        <!-- Step 1: Upload or Sample Section -->
-        <div id="upload-section" class="bg-white rounded-2xl border border-slate-200 p-6 md:p-8 shadow-sm">
-            <h3 class="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-                <span class="bg-blue-100 text-blue-700 w-7 h-7 rounded-full inline-flex items-center justify-center text-sm font-bold">1</span>
-                Upload Lab Image or Test Report
-            </h3>
+<div class="hero">
+  <h1>Hello, I'm <span>Maryam</span></h1>
+  <p>
+    Welcome to my personal website.
+    A space where I share my interests,
+    ideas, learning journey, and creative projects.
+  </p>
+  <a class="btn" href="#about">Discover More</a>
+</div>
 
-            <!-- Dropzone / File Upload -->
-            <div class="border-2 border-dashed border-slate-300 hover:border-blue-500 transition rounded-xl p-8 text-center cursor-pointer bg-slate-50 relative group mb-6" onclick="document.getElementById('file-input').click()">
-                <input type="file" id="file-input" class="hidden" accept="image/*,.pdf" onchange="handleFileSelect(event)">
-                <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition shadow-sm">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                </div>
-                <p class="text-sm font-medium text-slate-700 mb-1">Click to upload lab photo/PDF or drag & drop</p>
-                <p class="text-xs text-slate-400" id="file-name-display">Supports PNG, JPG, or PDF (Simulated OCR)</p>
-            </div>
+<section id="about">
+  <div class="about">
+    <h2>About Me</h2>
+    <p>
+      I am passionate about learning, technology,
+      artificial intelligence, and creative thinking.
+      This website is a place to explore my interests,
+      document my journey, and share my projects.
+    </p>
+  </div>
+</section>
 
-            <!-- Divider -->
-            <div class="relative flex py-2 items-center mb-6">
-                <div class="flex-grow border-t border-slate-200"></div>
-                <span class="flex-shrink mx-4 text-xs text-slate-400 uppercase tracking-wider font-semibold">Or test with pre-loaded profiles</span>
-                <div class="flex-grow border-t border-slate-200"></div>
-            </div>
+<section id="projects">
+  <h2>Interests & Projects</h2>
 
-            <!-- Sample Buttons -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <button onclick="loadSample('anemia')" class="p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left flex items-start gap-3 group">
-                    <div class="p-2 rounded-lg bg-amber-50 text-amber-600 group-hover:bg-amber-100 transition mt-0.5">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-semibold text-slate-900">Sample 1: Low Hemoglobin (Anemia Risk)</h4>
-                        <p class="text-xs text-slate-500 mt-0.5">Includes HGB, MCV, Ferritin flags</p>
-                    </div>
-                </button>
+  <div class="projects">
 
-                <button onclick="loadSample('metabolic')" class="p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition text-left flex items-start gap-3 group">
-                    <div class="p-2 rounded-lg bg-emerald-50 text-emerald-600 group-hover:bg-emerald-100 transition mt-0.5">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-semibold text-slate-900">Sample 2: Normal Metabolic Panel</h4>
-                        <p class="text-xs text-slate-500 mt-0.5">Glucose, Cholesterol, Liver enzymes normal</p>
-                    </div>
-                </button>
-            </div>
-        </div>
-
-        <!-- Step 2: AI Processing Pipeline Animation -->
-        <div id="processing-section" class="hidden bg-white rounded-2xl border border-slate-200 p-8 shadow-sm text-center">
-            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-spin shadow-inner">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-            </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2" id="processing-title">Running Multi-Agent Analysis...</h3>
-            <p class="text-xs text-slate-500 mb-6" id="processing-desc">Agent 1: Extracting text & numerical data from document...</p>
-            
-            <!-- Progress Bar -->
-            <div class="w-full bg-slate-100 rounded-full h-2.5 max-w-md mx-auto overflow-hidden">
-                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: 25%"></div>
-            </div>
-        </div>
-
-        <!-- Step 3: Analysis Results Dashboard -->
-        <div id="results-section" class="hidden space-y-6">
-            
-            <!-- Summary Header Card -->
-            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-4">
-                    <div id="status-icon-bg" class="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold shadow-md">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <div>
-                        <h3 class="text-base font-bold text-slate-900" id="result-status-title">Analysis Completed</h3>
-                        <p class="text-xs text-slate-500" id="result-status-subtitle">Processed via 4 specialized medical AI agents</p>
-                    </div>
-                </div>
-                <button onclick="resetApp()" class="text-xs text-slate-600 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg font-medium transition">
-                    Analyze Another Report
-                </button>
-            </div>
-
-            <!-- Detailed Parameters Table -->
-            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-                <div class="px-6 py-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
-                    <h4 class="font-bold text-slate-900 text-sm">Extracted Parameters & Reference Ranges</h4>
-                    <span class="text-xs bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-medium">Agent 1 & 2 Output</span>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs md:text-sm">
-                        <thead>
-                            <tr class="border-b border-slate-200 text-slate-400 font-semibold bg-slate-50/50">
-                                <th class="py-3 px-6">Test Parameter</th>
-                                <th class="py-3 px-6">Result</th>
-                                <th class="py-3 px-6">Reference Range</th>
-                                <th class="py-3 px-6">Status / Flag</th>
-                            </tr>
-                        </thead>
-                        <tbody id="parameters-table-body" class="divide-y divide-slate-100">
-                            <!-- Populated via JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- AI Clinical Interpretation & Safe Recommendations (Agent 3) -->
-            <div class="bg-white rounded-2xl border border-slate-200 p-6 md:p-8 shadow-sm">
-                <div class="flex items-center gap-2 mb-4">
-                    <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                    </div>
-                    <h4 class="font-bold text-slate-900 text-base">Agent 3: Clinical Interpretation & Safe Guidance</h4>
-                </div>
-                
-                <div id="interpretation-content" class="space-y-4 text-xs md:text-sm text-slate-600 leading-relaxed mb-6">
-                    <!-- Populated via JS -->
-                </div>
-
-                <!-- Medical Disclaimer Alert -->
-                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800 flex items-start gap-3">
-                    <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    <div>
-                        <strong class="font-semibold block mb-0.5">Clinical Disclaimer</strong>
-                        Final diagnosis and treatment must never rely solely on an AI blood test screening. Age, symptoms, medications, and physician evaluation are essential.
-                    </div>
-                </div>
-            </div>
-
-            <!-- PDF Export Configuration (Agent 4) -->
-            <div class="bg-gradient-to-r from-slate-900 to-blue-900 text-white rounded-2xl p-6 md:p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-                <div>
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="bg-blue-500 text-white text-xs px-2.5 py-0.5 rounded-md font-bold">Agent 4</span>
-                        <h4 class="text-lg font-bold">Export Official PDF Report</h4>
-                    </div>
-                    <p class="text-slate-300 text-xs md:text-sm">Select your preferred language for the downloadable PDF report:</p>
-                </div>
-
-                <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-                    <select id="pdf-lang-select" class="bg-slate-800 text-white border border-slate-700 text-xs rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 font-medium w-full sm:w-44">
-                        <option value="en">🇬🇧 English</option>
-                        <option value="fa">🇮🇷 فارسی (Persian)</option>
-                        <option value="tr">🇹🇷 Türkçe (Turkish)</option>
-                        <option value="es">🇪🇸 Español (Spanish)</option>
-                    </select>
-                    <button onclick="downloadPDF()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-6 py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2 whitespace-nowrap w-full sm:w-auto">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        Download PDF
-                    </button>
-                </div>
-            </div>
-
-        </div>
-
-    </main>
-
-    <!-- Hidden Printable PDF Template -->
-    <div id="pdf-template" class="hidden bg-white text-slate-800 p-8 max-w-2xl mx-auto font-sans">
-        <div class="border-b border-slate-300 pb-4 mb-6 flex justify-between items-center">
-            <div>
-                <h2 id="pdf-title" class="text-xl font-bold text-slate-900">MediAI Blood Test Report</h2>
-                <p id="pdf-subtitle" class="text-xs text-slate-500">Generated by Multi-Agent AI Clinical System</p>
-            </div>
-            <div class="text-right text-xs text-slate-400">
-                <p id="pdf-date">Date: 2026-11-06</p>
-                <p>Status: Verified</p>
-            </div>
-        </div>
-
-        <div class="mb-6">
-            <h3 id="pdf-sec-summary" class="text-sm font-bold text-slate-900 mb-2 uppercase tracking-wider">Executive Summary</h3>
-            <p id="pdf-summary-text" class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-200"></p>
-        </div>
-
-        <div class="mb-6">
-            <h3 id="pdf-sec-params" class="text-sm font-bold text-slate-900 mb-2 uppercase tracking-wider">Parameters Analysis</h3>
-            <table class="w-full text-left text-xs border-collapse">
-                <thead>
-                    <tr class="bg-slate-100 text-slate-600 border-b border-slate-200">
-                        <th id="pdf-th-param" class="p-2">Parameter</th>
-                        <th id="pdf-th-res" class="p-2">Result</th>
-                        <th id="pdf-th-ref" class="p-2">Reference Range</th>
-                        <th id="pdf-th-status" class="p-2">Status</th>
-                    </tr>
-                </thead>
-                <tbody id="pdf-table-body" class="divide-y divide-slate-100"></tbody>
-            </table>
-        </div>
-
-        <div class="mb-6">
-            <h3 id="pdf-sec-rec" class="text-sm font-bold text-slate-900 mb-2 uppercase tracking-wider">Clinical Recommendations</h3>
-            <div id="pdf-rec-text" class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2"></div>
-        </div>
-
-        <div class="border-t border-slate-200 pt-4 text-center text-[10px] text-slate-400">
-            <p id="pdf-footer-note">Disclaimer: This report is generated by an AI assistant for informational purposes and does not replace professional medical diagnosis.</p>
-        </div>
+    <div class="card">
+      <h3>Artificial Intelligence</h3>
+      <p>
+        Exploring AI tools, technologies,
+        and their creative applications.
+      </p>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-400">
-        <p>MediAI Lab Assistant &bull; Powered by Multi-Agent AI Architecture</p>
-    </footer>
+    <div class="card">
+      <h3>Learning & Development</h3>
+      <p>
+        Discovering new skills and continuously
+        expanding my knowledge.
+      </p>
+    </div>
 
-    <!-- JavaScript Application Logic -->
-    <script>
-        let currentTestData = null;
+    <div class="card">
+      <h3>Creative Ideas</h3>
+      <p>
+        Turning interesting ideas into
+        creative and meaningful projects.
+      </p>
+    </div>
 
-        const translations = {
-            en: {
-                title: "MediAI Blood Test Report",
-                subtitle: "Generated by Multi-Agent AI Clinical System",
-                secSummary: "Executive Summary",
-                secParams: "Parameters Analysis",
-                secRec: "Clinical Recommendations",
-                thParam: "Parameter",
-                thRes: "Result",
-                thRef: "Reference Range",
-                thStatus: "Status",
-                disclaimer: "Disclaimer: This report is generated by an AI assistant for informational purposes and does not replace professional medical diagnosis."
-            },
-            fa: {
-                title: "گزارش هوشمند تحلیل آزمایش خون",
-                subtitle: "تولید شده توسط سیستم چند ایجنته هوش مصنوعی پزشکی",
-                secSummary: "خلاصه وضعیت بالینی",
-                secParams: "تحلیل پارامترهای آزمایشگاهی",
-                secRec: "توصیه‌ها و اقدامات پیگیری",
-                thParam: "نام آزمایش",
-                thRes: "مقدار",
-                thRef: "محدوده مرجع",
-                thStatus: "وضعیت",
-                disclaimer: "سلب مسئولیت: این گزارش توسط هوش مصنوعی تولید شده و جایگزین تشخیص پزشک متخصص نمی‌باشد."
-            },
-            tr: {
-                title: "MediAI Kan Testi Analiz Raporu",
-                subtitle: "Çoklu Yapay Zeka Ajan Sistemi Tarafından Üretilmiştir",
-                secSummary: "Klinik Özet",
-                secParams: "Parametre Analizi",
-                secRec: "Klinik Öneriler ve Takip",
-                thParam: "Parametre",
-                thRes: "Sonuç",
-                thRef: "Referans Aralığı",
-                thStatus: "Durum",
-                disclaimer: "Yasal Uyarı: Bu rapor yapay zeka tarafından bilgilendirme amaçlı üretilmiştir, tıbbi teşhis yerine geçmez."
-            },
-            es: {
-                title: "Informe de Análisis de Sangre MediAI",
-                subtitle: "Generado por Sistema Clínico de Agentes de IA",
-                secSummary: "Resumen Ejecutivo",
-                secParams: "Análisis de Parámetros",
-                secRec: "Recomendaciones Clínicas",
-                thParam: "Parámetro",
-                thRes: "Resultado",
-                thRef: "Rango de Referencia",
-                thStatus: "Estado",
-                disclaimer: "Aviso legal: Este informe es generado por IA con fines informativos و no sustituye el diagnóstico médico profesional."
-            }
-        };
+  </div>
+</section>
 
-        const sampleDataSets = {
-            anemia: {
-                status: "warning",
-                title: "Anemia Risk Detected (Low Hemoglobin)",
-                subtitle: "Agent 3 identified values outside standard laboratory reference range.",
-                parameters: [
-                    { name: "Hemoglobin (HGB)", result: "10.2 g/dL", range: "12.0 - 15.5 g/dL", status: "Low (Out of Range)", flag: "warning" },
-                    { name: "MCV (Mean Corpuscular Volume)", result: "78 fL", range: "80 - 100 fL", status: "Low", flag: "warning" },
-                    { name: "Ferritin", result: "18 ng/mL", range: "30 - 150 ng/mL", status: "Low", flag: "warning" },
-                    { name: "White Blood Cells (WBC)", result: "6.5 x10^3/µL", range: "4.5 - 11.0 x10^3/µL", status: "Normal", flag: "normal" },
-                    { name: "Platelets", result: "250 x10^3/µL", range: "150 - 450 x10^3/µL", status: "Normal", flag: "normal" }
-                ],
-                interpretation: [
-                    "<strong>Agent 3 Finding:</strong> Hemoglobin (10.2 g/dL) and Ferritin (18 ng/mL) are below standard reference limits. This pattern is commonly associated with iron deficiency anemia.",
-                    "<strong>Potential Causes:</strong> Inadequate dietary iron intake, chronic micro-bleeding, or impaired absorption.",
-                    "<strong>Recommended Safe Actions:</strong> Consult a general practitioner or hematologist for secondary confirmation (e.g., serum iron and TIBC tests). Avoid self-prescribing high-dose iron supplements without professional medical guidance."
-                ]
-            },
-            metabolic: {
-                status: "normal",
-                title: "Optimal Metabolic Profile",
-                subtitle: "All evaluated parameters are within normal laboratory limits.",
-                parameters: [
-                    { name: "Fasting Blood Glucose", result: "90 mg/dL", range: "70 - 99 mg/dL", status: "Normal", flag: "normal" },
-                    { name: "Total Cholesterol", result: "180 mg/dL", range: "< 200 mg/dL", status: "Normal", flag: "normal" },
-                    { name: "Triglycerides", result: "130 mg/dL", range: "< 150 mg/dL", status: "Normal", flag: "normal" },
-                    { name: "AST (SGOT)", result: "22 U/L", range: "10 - 40 U/L", status: "Normal", flag: "normal" },
-                    { name: "Creatinine", result: "0.9 mg/dL", range: "0.6 - 1.2 mg/dL", status: "Normal", flag: "normal" }
-                ],
-                interpretation: [
-                    "<strong>Agent 3 Finding:</strong> All analyzed metabolic and hepatic biomarkers are within normal reference ranges.",
-                    "<strong>Potential Causes:</strong> Balanced metabolic function with no acute indicators of dyslipidemia or hyperglycemia.",
-                    "<strong>Recommended Safe Actions:</strong> Maintain a balanced diet, regular physical exercise, and routine annual blood screenings."
-                ]
-            }
-        };
+<footer>
+  © 2026 Maryam Shafaei. All Rights Reserved.
+</footer>
 
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (file) {
-                document.getElementById('file-name-display').innerText = `Selected file: ${file.name}`;
-                simulateAIProcessing('anemia'); // Default fallback for custom upload demonstration
-            }
-        }
-
-        function loadSample(type) {
-            simulateAIProcessing(type);
-        }
-
-        function simulateAIProcessing(type) {
-            document.getElementById('upload-section').classList.add('hidden');
-            const procSec = document.getElementById('processing-section');
-            procSec.classList.remove('hidden');
-
-            const steps = [
-                { title: "Agent 1: OCR & Text Extraction", desc: "Extracting numerical values and test names from image...", progress: "25%" },
-                { title: "Agent 2: Reference Range Validation", desc: "Comparing parameters against laboratory threshold standards...", progress: "50%" },
-                { title: "Agent 3: Clinical Context & Safety Analysis", desc: "Evaluating out-of-range correlations and formulating guidance...", progress: "75%" },
-                { title: "Agent 4: PDF Report Generation Ready", desc: "Finalizing multi-language structured output...", progress: "100%" }
-            ];
-
-            let i = 0;
-            const interval = setInterval(() => {
-                if (i < steps.length) {
-                    document.getElementById('processing-title').innerText = steps[i].title;
-                    document.getElementById('processing-desc').innerText = steps[i].desc;
-                    document.getElementById('progress-bar').style.width = steps[i].progress;
-                    i++;
-                } else {
-                    clearInterval(interval);
-                    procSec.classList.add('hidden');
-                    renderResults(sampleDataSets[type]);
-                }
-            }, 700);
-        }
-
-        function renderResults(data) {
-            currentTestData = data;
-            document.getElementById('results-section').classList.remove('hidden');
-
-            const iconBg = document.getElementById('status-icon-bg');
-            if (data.status === 'warning') {
-                iconBg.className = "w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold shadow-md bg-amber-500";
-            } else {
-                iconBg.className = "w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold shadow-md bg-emerald-500";
-            }
-
-            document.getElementById('result-status-title').innerText = data.title;
-            document.getElementById('result-status-subtitle').innerText = data.subtitle;
-
-            // Render Table
-            let tableHTML = '';
-            data.parameters.forEach(p => {
-                const badgeClass = p.flag === 'warning' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800';
-                tableHTML += `
-                    <tr class="hover:bg-slate-50 transition">
-                        <td class="py-3 px-6 font-medium text-slate-900">${p.name}</td>
-                        <td class="py-3 px-6 text-slate-700">${p.result}</td>
-                        <td class="py-3 px-6 text-slate-500">${p.range}</td>
-                        <td class="py-3 px-6"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${badgeClass}">${p.status}</span></td>
-                    </tr>
-                `;
-            });
-            document.getElementById('parameters-table-body').innerHTML = tableHTML;
-
-            // Render Interpretation
-            let interpHTML = '';
-            data.interpretation.forEach(paragraph => {
-                interpHTML += `<p>${paragraph}</p>`;
-            });
-            document.getElementById('interpretation-content').innerHTML = interpHTML;
-        }
-
-        function downloadPDF() {
-            if (!currentTestData) return;
-            const lang = document.getElementById('pdf-lang-select').value;
-            const t = translations[lang];
-
-            // Set PDF Template Content with selected language
-            document.getElementById('pdf-title').innerText = t.title;
-            document.getElementById('pdf-subtitle').innerText = t.subtitle;
-            document.getElementById('pdf-sec-summary').innerText = t.secSummary;
-            document.getElementById('pdf-sec-params').innerText = t.secParams;
-            document.getElementById('pdf-sec-rec').innerText = t.secRec;
-            document.getElementById('pdf-th-param').innerText = t.thParam;
-            document.getElementById('pdf-th-res').innerText = t.thRes;
-            document.getElementById('pdf-th-ref').innerText = t.thRef;
-            document.getElementById('pdf-th-status').innerText = t.thStatus;
-            document.getElementById('pdf-footer-note').innerText = t.disclaimer;
-
-            // Set RTL if Persian
-            const pdfTemplate = document.getElementById('pdf-template');
-            if (lang === 'fa') {
-                pdfTemplate.setAttribute('dir', 'rtl');
-                pdfTemplate.style.fontFamily = 'Vazirmatn, sans-serif';
-            } else {
-                pdfTemplate.setAttribute('dir', 'ltr');
-                pdfTemplate.style.fontFamily = 'Inter, sans-serif';
-            }
-
-            document.getElementById('pdf-summary-text').innerText = currentTestData.title + " - " + currentTestData.subtitle;
-
-            let pdfTableHTML = '';
-            currentTestData.parameters.forEach(p => {
-                pdfTableHTML += `
-                    <tr class="border-b border-slate-100">
-                        <td class="p-2 font-medium">${p.name}</td>
-                        <td class="p-2">${p.result}</td>
-                        <td class="p-2 text-slate-500">${p.range}</td>
-                        <td class="p-2 font-semibold">${p.status}</td>
-                    </tr>
-                `;
-            });
-            document.getElementById('pdf-table-body').innerHTML = pdfTableHTML;
-
-            let pdfRecHTML = '';
-            currentTestData.interpretation.forEach(p => {
-                pdfRecHTML += `<p>${p.replace(/<\/?[^>]+(>|$)/g, "")}</p>`;
-            });
-            document.getElementById('pdf-rec-text').innerHTML = pdfRecHTML;
-
-            // Show template temporarily for generation
-            pdfTemplate.classList.remove('hidden');
-
-            const opt = {
-                margin:       10,
-                filename:     `MediAI_Lab_Report_${lang}.pdf`,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            html2pdf().from(pdfTemplate).set(opt).save().then(() => {
-                pdfTemplate.classList.add('hidden');
-            });
-        }
-
-        function resetApp() {
-            document.getElementById('results-section').classList.add('hidden');
-            document.getElementById('upload-section').classList.remove('hidden');
-            document.getElementById('file-input').value = '';
-            document.getElementById('file-name-display').innerText = 'Supports PNG, JPG, or PDF (Simulated OCR)';
-            currentTestData = null;
-        }
-    </script>
 </body>
 </html>

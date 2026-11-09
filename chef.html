@@ -18,16 +18,21 @@
         <div class="max-w-md mx-auto flex items-center justify-between gap-2">
             <div>
                 <h1 class="text-xl font-black">سرآشپز هوشمند 👩‍🍳</h1>
-                <p class="text-xs text-orange-100 mt-1">۱۰ مدل پیشنهاد جذاب برای هر نوع مواد اولیه!</p>
+                <p class="text-xs text-orange-100 mt-1">۱۰ مدل پیشنهاد جذاب با هوش مصنوعی!</p>
             </div>
             
-            <select id="langSelect" onchange="changeLanguage(this.value)" 
-                class="bg-white/25 text-white font-bold text-xs py-2 px-3 rounded-2xl backdrop-blur-md border border-white/30 focus:outline-none cursor-pointer">
-                <option value="fa" class="text-slate-800">🇮🇷 فارسی</option>
-                <option value="en" class="text-slate-800">🇬🇧 English</option>
-                <option value="tr" class="text-slate-800">🇹🇷 Türkçe</option>
-                <option value="ar" class="text-slate-800">🇸🇦 العربية</option>
-            </select>
+            <div class="flex items-center gap-1.5">
+                <button onclick="toggleApiModal()" class="bg-white/20 hover:bg-white/30 p-2 rounded-2xl text-xs font-bold transition" title="تنظیمات API">
+                    ⚙️
+                </button>
+                <select id="langSelect" onchange="changeLanguage(this.value)" 
+                    class="bg-white/25 text-white font-bold text-xs py-2 px-2.5 rounded-2xl backdrop-blur-md border border-white/30 focus:outline-none cursor-pointer">
+                    <option value="fa" class="text-slate-800">🇮🇷 فارسی</option>
+                    <option value="en" class="text-slate-800">🇬🇧 English</option>
+                    <option value="tr" class="text-slate-800">🇹🇷 Türkçe</option>
+                    <option value="ar" class="text-slate-800">🇸🇦 العربية</option>
+                </select>
+            </div>
         </div>
     </header>
 
@@ -36,7 +41,7 @@
             <label id="inputLabel" class="block text-sm font-bold text-slate-700 mb-2">چه موادی تو یخچال یا کابینت داری؟</label>
             <textarea id="ingredients" rows="3" 
                 class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm leading-relaxed"
-                placeholder="مثلاً: مرغ، برنج، سیب‌زمینی، گوجه، پیاز، پنیر..."></textarea>
+                placeholder="مثلاً: مرغ، برنج، سیب‌زمینی، گوجه، پیاز..."></textarea>
             
             <div id="quickTags" class="flex flex-wrap gap-1.5 mt-3 mb-4"></div>
 
@@ -54,8 +59,38 @@
         <div id="results" class="space-y-5"></div>
     </main>
 
+    <!-- API Key Modal -->
+    <div id="apiModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl">
+            <h3 class="font-bold text-lg text-slate-800 mb-2">اتصال به Gemini API (اختیاری)</h3>
+            <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                اگر می‌خواهید هوش مصنوعی اختصاصی گوگل پاسخ‌ها را بدهد، کلید رایگان خود را اینجا وارد کنید (در غیر این صورت برنامه از موتور هوشمند داخلی استفاده می‌کند):
+            </p>
+            <input type="password" id="apiKeyInput" placeholder="AIzaSy..." 
+                class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-left dir-ltr text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            <div class="flex gap-2">
+                <button onclick="saveApiKey()" class="flex-1 bg-orange-500 text-white font-bold py-2.5 rounded-xl text-sm">ذخیره</button>
+                <button onclick="toggleApiModal()" class="flex-1 bg-slate-100 text-slate-700 font-bold py-2.5 rounded-xl text-sm">بستن</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let currentLang = 'fa';
+        document.getElementById('apiKeyInput').value = localStorage.getItem('gemini_chef_api_key') || '';
+
+        function toggleApiModal() {
+            const modal = document.getElementById('apiModal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+
+        function saveApiKey() {
+            const key = document.getElementById('apiKeyInput').value.trim();
+            localStorage.setItem('gemini_chef_api_key', key);
+            toggleApiModal();
+            alert('کلید API با موفقیت ذخیره شد!');
+        }
 
         const translations = {
             fa: { dir: 'rtl', label: 'چه موادی تو یخچال یا کابینت داری؟', placeholder: 'مثلاً: مرغ، برنج، سیب‌زمینی، گوجه، پیاز...', btn: 'دریافت ۱۰ مدل غذای متنوع ✨', loading: 'هوش مصنوعی در حال خلق ۱۰ مدل غذای جذاب...', alert: 'لطفاً چند ماده اولیه وارد کن!', ing: '🛒 مواد لازم و ترکیبات:', steps: '👩‍🍳 دستور پخت مرحله به مرحله:', tags: ['مرغ', 'تخم‌مرغ', 'سیب‌زمینی', 'برنج', 'گوشت', 'بادمجان', 'قارچ', 'گوجه'] },
@@ -101,112 +136,73 @@
             loading.classList.remove('hidden');
             loading.classList.add('flex');
 
-            setTimeout(() => {
+            const apiKey = localStorage.getItem('gemini_chef_api_key');
+            let dishes = [];
+
+            // If user added Gemini API key, use it live!
+            if (apiKey) {
+                try {
+                    const prompt = `I have these ingredients: "${input}". Suggest exactly 10 delicious dishes that can be made with these. Return ONLY a valid JSON array with no extra text: [{"name":"Dish name in Persian","en":"English name for image","time":"Cooking time","ing":"Ingredients list","steps":"Step by step instructions"}]`;
+                    
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { responseMimeType: "application/json" } })
+                    });
+                    const data = await response.json();
+                    const text = data.candidates[0].content.parts[0].text;
+                    dishes = JSON.parse(text);
+                } catch (e) {
+                    console.log("API Error, switching to smart fallback");
+                }
+            }
+
+            // Fallback or default 10 varied recipes generator
+            if (dishes.length === 0) {
                 const words = input.split(/[\s،,-]+/).filter(w => w.length > 1);
-                const main1 = words[0] || 'ماده اول';
+                const main1 = words[0] || 'ماده';
                 const main2 = words[1] || main1;
 
-                // Generates 10 distinct recipes
-                const dishes = [
-                    {
-                        name: `۱. خوراک ویژه و مجلسی با ${main1}`,
-                        enName: `Gourmet dish with ${input}`,
-                        time: '۴۰ دقیقه',
-                        ingredients: `${input}، پیاز داغ، زعفران دم‌کرده، روغن زیتون، نمک و فلفل سیاه`,
-                        steps: `۱. پیاز را نگینی خرد کرده و در تابه تفت دهید تا طلایی شود.\n۲. مواد اصلی (${input}) را افزوده و با حرارت ملایم تفت دهید.\n۳. کمی زعفران و آب اضافه کرده و بگذارید جا بیفتد.`
-                    },
-                    {
-                        name: `۲. سرخ‌کرده یا گریل طلایی سرآشپز`,
-                        enName: `Crispy pan fried special ${main1}`,
-                        time: '۲۵ دقیقه',
-                        ingredients: `${main1} و سایر مواد (${input})، کره، پودر سیر، ادویه مخصوص`,
-                        steps: `۱. مواد را به قطعات دلخواه برش بزنید و با ادویه‌ها مزه‌دار کنید.\n۲. در تابه با کره یا روغن داغ با حرارت بالا سرخ یا گریل کنید.\n۳. به صورت گرم همراه با سبزیجات تازه سرو کنید.`
-                    },
-                    {
-                        name: `۳. خورشت یا سوپ گرم ترکیبی`,
-                        enName: `Hearty stew or soup with ${input}`,
-                        time: '۵۰ دقیقه',
-                        ingredients: `مجموعه مواد (${input})، رب گوجه‌فرنگی، پیاز، لیموعمانی یا ادویه`,
-                        steps: `۱. پیاز و رب را در روغن تفت دهید تا رنگ باز کند.\n۲. مواد اولیه را اضافه کرده و آب جوش بریزید.\n۳. اجازه دهید با حرارت ملایم پخته و کاملاً غلیظ شود.`
-                    },
-                    {
-                        name: `۴. مخلوط‌پلو سنتی با ${main1}`,
-                        enName: `Traditional mixed rice with ${main1}`,
-                        time: '۶۰ دقیقه',
-                        ingredients: `برنج، ${input}, روغن، زعفران و ادویه دلخواه`,
-                        steps: `۱. برنج را آبکش کنید.\n۲. مواد خرد شده (${input}) را تفت داده و به صورت لایه‌لایه یا مخلوط با برنج دم بگذارید.\n۳. پس از دم کشیدن با زعفران تزیین کنید.`
-                    },
-                    {
-                        name: `۵. خوراک سریع تابهٔ فوری`,
-                        enName: `Quick skillet meal with ${input}`,
-                        time: '۲۰ دقیقه',
-                        ingredients: `${input}، تخم‌مرغ یا پنیر، روغن، ادویه جات`,
-                        steps: `۱. تمامی مواد را به قطعات ریز خرد کنید.\n۲. در تابه با کمی روغن سریع تفت دهید.\n۳. در صورت تمایل تخم‌مرغ یا پنیر روی آن اضافه کرده و سرو کنید.`
-                    },
-                    {
-                        name: `۶. گراتن و پخت تنوری با پنیر`,
-                        enName: `Cheesy baked casserole with ${input}`,
-                        time: '۴۵ دقیقه',
-                        ingredients: `${input}، پنیر پیتزا یا موزارلا، شیر، کره، آرد`,
-                        steps: `۱. مواد را تفت داده و در ظرف مخصوص فر بریزید.\n۲. سس سفید ملایم روی آن بپاشید و لایه رویی را با پنیر بپوشانید.\n۳. در فر قرار دهید تا پنیر طلایی و برشته شود.`
-                    },
-                    {
-                        name: `۷. سالاد گرم رژیمی و مغذی`,
-                        enName: `Warm healthy diet salad with ${input}`,
-                        time: '۲۰ دقیقه',
-                        ingredients: `${input}، کاهو یا سبزیجات، آبلیمو، روغن زیتون، کنجد`,
-                        steps: `۱. ${main1} را گریل یا بخارپز کنید.\n۲. روی بستر سبزیجات تازه بچینید.\n۳. با سس آبلیمو و روغن زیتون طعم‌دار کنید.`
-                    },
-                    {
-                        name: `۸. رول یا ساندویچ نانی خوشمزه`,
-                        enName: `Delicious wrap or sandwich with ${input}`,
-                        time: '۱۵ دقیقه',
-                        ingredients: `${input}، نان باگت یا لواش، سس دلخواه، کاهو و خیارشور`,
-                        steps: `۱. مواد اولیه را با پیاز و ادویه تفت دهید تا کاملاً پخته شود.\n۲. داخل نان به همراه کاهو و گوجه قرار دهید.\n۳. به صورت ساندویچ گرم میل کنید.`
-                    },
-                    {
-                        name: `۹. املت یا خاگینه ترکیبی خلاقانه`,
-                        enName: `Creative mixed omelet with ${input}`,
-                        time: '۱۵ دقیقه',
-                        ingredients: `${input}، تخم‌مرغ، کره، نمک، فلفل سیاه`,
-                        steps: `۱. مواد خرد شده را در تابه تفت دهید تا نرم شوند.\n۲. تخم‌مرغ‌ها را روی آن بشکنید و هم بزنید.\n۳. تا بسته شدن تخم‌مرغ‌ها صبر کرده و گرم سرو کنید.`
-                    },
-                    {
-                        name: `۱۰. ته چین یا برنج قالبی زعفرانی`,
-                        enName: `Saffron layered Tahchin with ${input}`,
-                        time: '۵۵ دقیقه',
-                        ingredients: `برنج آبکش‌شده، ماست چکیده، زرده تخم‌مرغ، زعفران، ${input}`,
-                        steps: `۱. برنج را با ماست، زرده تخم‌مرغ و زعفران فراوان مخلوط کنید.\n۲. نیمی از برنج را در ظرف ریخته، مواد (${input}) را وسط آن بچینید و روی آن را با بقیه برنج بپوشانید.\n۳. دم بگذارید تا ته دیگ طلایی و ترد شود.`
-                    }
+                dishes = [
+                    { name: `۱. خوراک ویژه و مجلسی با ${main1}`, en: `Gourmet dish with ${input}`, time: '۴۰ دقیقه', ing: `${input}، پیاز داغ، زعفران، روغن، نمک و فلفل`, steps: '۱. پیاز را تفت داده و مواد را اضافه کنید.\n۲. زعفران و ادویه زده و بگذارید بپزد.' },
+                    { name: `۲. سرخ‌کرده یا گریل طلایی سرآشپز`, en: `Crispy pan fried special ${main1}`, time: '۲۵ دقیقه', ing: `${main1}، کره، پودر سیر، ادویه مخصوص`, steps: '۱. مواد را مزه‌دار کرده و در تابه با کره سرخ کنید.\n۲. به صورت گرم سرو کنید.' },
+                    { name: `۳. خورشت یا سوپ گرم ترکیبی`, en: `Hearty stew or soup with ${input}`, time: '۵۰ دقیقه', ing: `مجموعه مواد (${input})، رب، پیاز، لیموعمانی`, steps: '۱. پیاز و رب را تفت داده، مواد را اضافه کنید.\n۲. آب جوش ریخته و اجازه دهید جا بیفتد.' },
+                    { name: `۴. مخلوط‌پلو سنتی با ${main1}`, en: `Traditional mixed rice with ${input}`, time: '۶۰ دقیقه', ing: `برنج، ${input}، روغن و زعفران`, steps: '۱. برنج را آبکش کنید.\n۲. مواد تفت‌داده را لابه‌لای برنج دم بگذارید.' },
+                    { name: `۵. خوراک سریع تابهٔ فوری`, en: `Quick skillet meal with ${input}`, time: '۲۰ دقیقه', ing: `${input}، تخم‌مرغ یا پنیر، روغن`, steps: '۱. مواد را ریز خرد کرده و در تابه تفت دهید.\n۲. در صورت تمایل تخم‌مرغ افزوده و سرو کنید.' },
+                    { name: `۶. گراتن و پخت تنوری با پنیر`, en: `Cheesy baked casserole with ${input}`, time: '۴۵ دقیقه', ing: `${input}، پنیر پیتزا، شیر، کره، آرد`, steps: '۱. مواد را تفت داده و در ظرف فر بریزید.\n۲. با پنیر پوشانده و گراتینه کنید.' },
+                    { name: `۷. سالاد گرم رژیمی و مغذی`, en: `Warm healthy diet salad with ${input}`, time: '۲۰ دقیقه', ing: `${input}، سبزیجات، آبلیمو، روغن زیتون`, steps: '۱. مواد را گریل یا بخارپز کنید.\n۲. روی سبزیجات چیده و سس بزنید.' },
+                    { name: `۸. رول یا ساندویچ نانی خوشمزه`, en: `Delicious wrap or sandwich with ${input}`, time: '۱۵ دقیقه', ing: `${input}، نان، سس، کاهو و گوجه`, steps: '۱. مواد را با پیاز تفت دهید.\n۲. داخل نان به همراه کاهو ساندویچ کنید.' },
+                    { name: `۹. املت یا خاگینه ترکیبی خلاقانه`, en: `Creative mixed omelet with ${input}`, time: '۱۵ دقیقه', ing: `${input}، تخم‌مرغ، کره و ادویه`, steps: '۱. مواد را خرد کرده در تابه تفت دهید.\n۲. تخم‌مرغ‌ها را روی آن بشکنید.' },
+                    { name: `۱۰. ته چین یا برنج قالبی زعفرانی`, en: `Saffron layered Tahchin with ${input}`, time: '۵۵ دقیقه', ing: `برنج، ماست، زرده تخم‌مرغ، زعفران، ${input}`, steps: '۱. برنج را با ماست و زعفران مخلوط کنید.\n۲. مواد را وسط برنج گذاشته و دم بگذارید.' }
                 ];
+            }
 
-                results.innerHTML = dishes.map((r, i) => {
-                    const imgPrompt = encodeURIComponent(`${r.enName}, professional restaurant food photography, highly detailed, 8k, warm lighting`);
-                    const imgUrl = `https://image.pollinations.ai/prompt/${imgPrompt}?width=700&height=500&nologo=true&seed=${Date.now() + i}`;
-                    
-                    return `
-                    <div class="bg-white rounded-3xl shadow-md border border-orange-100 overflow-hidden transition hover:shadow-lg">
-                        <div class="relative h-52 bg-slate-100">
-                            <img src="${imgUrl}" alt="${r.name}" class="w-full h-full object-cover" loading="lazy">
-                            <span class="absolute top-3 left-3 bg-black/60 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-full">⏱️ ${r.time}</span>
+            results.innerHTML = dishes.map((r, i) => {
+                const imgPrompt = encodeURIComponent(`${r.en || r.name}, professional restaurant food photography, 8k, warm lighting`);
+                const imgUrl = `https://image.pollinations.ai/prompt/${imgPrompt}?width=700&height=500&nologo=true&seed=${Date.now() + i}`;
+                
+                return `
+                <div class="bg-white rounded-3xl shadow-md border border-orange-100 overflow-hidden transition hover:shadow-lg">
+                    <div class="relative h-52 bg-slate-100">
+                        <img src="${imgUrl}" alt="${r.name}" class="w-full h-full object-cover" loading="lazy">
+                        <span class="absolute top-3 left-3 bg-black/60 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-full">⏱️ ${r.time || '۳۰ دقیقه'}</span>
+                    </div>
+                    <div class="p-5">
+                        <h2 class="text-lg font-black text-slate-800 mb-3">${r.name}</h2>
+                        <div class="bg-orange-50 rounded-2xl p-3 mb-3 border border-orange-100">
+                            <b class="text-xs text-orange-800 block mb-1">${t.ing}</b>
+                            <p class="text-xs text-slate-700 leading-relaxed">${r.ing}</p>
                         </div>
-                        <div class="p-5">
-                            <h2 class="text-lg font-black text-slate-800 mb-3">${r.name}</h2>
-                            <div class="bg-orange-50 rounded-2xl p-3 mb-3 border border-orange-100">
-                                <b class="text-xs text-orange-800 block mb-1">${t.ing}</b>
-                                <p class="text-xs text-slate-700 leading-relaxed">${r.ingredients}</p>
-                            </div>
-                            <div>
-                                <b class="text-xs text-slate-700 block mb-1">${t.steps}</b>
-                                <p class="text-xs text-slate-600 leading-6 whitespace-pre-line">${r.steps}</p>
-                            </div>
+                        <div>
+                            <b class="text-xs text-slate-700 block mb-1">${t.steps}</b>
+                            <p class="text-xs text-slate-600 leading-6 whitespace-pre-line">${r.steps}</p>
                         </div>
-                    </div>`;
-                }).join('');
+                    </div>
+                </div>`;
+            }).join('');
 
-                loading.classList.add('hidden');
-                loading.classList.remove('flex');
-            }, 600);
+            loading.classList.add('hidden');
+            loading.classList.remove('flex');
         }
 
         renderTags();

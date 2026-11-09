@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" id="htmlTag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Smart Chef | سرآشپز هوشمند</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <style>
+        body { font-family: 'Vazirmatn', system-ui, sans-serif; background-color: #fff7ed; -webkit-tap-highlight-color: transparent; }
+        .loader { border-top-color: #f97316; animation: spinner 1s linear infinite; }
+        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="min-h-screen pb-12 transition-all duration-200">
+
+    <!-- Header & Language Switcher -->
+    <header class="bg-gradient-to-l from-orange-600 to-amber-500 text-white p-5 shadow-lg rounded-b-3xl mb-6 sticky top-0 z-20">
+        <div class="max-w-md mx-auto flex items-center justify-between gap-2">
+            <div>
+                <h1 id="appTitle" class="text-xl font-black">سرآشپز هوشمند 👩‍🍳</h1>
+                <p id="appSub" class="text-xs text-orange-100 mt-1">مواد اولیه رو بگو، غذا و عکسش رو تحویل بگیر!</p>
+            </div>
+            
+            <!-- Language Selector -->
+            <select id="langSelect" onchange="changeLanguage(this.value)" 
+                class="bg-white/20 hover:bg-white/30 text-white font-bold text-xs py-2 px-3 rounded-2xl backdrop-blur-md border border-white/30 focus:outline-none cursor-pointer">
+                <option value="fa" class="text-slate-800">🇮🇷 فارسی</option>
+                <option value="en" class="text-slate-800">🇬🇧 English</option>
+                <option value="tr" class="text-slate-800">🇹🇷 Türkçe</option>
+                <option value="ar" class="text-slate-800">🇸🇦 العربية</option>
+            </select>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto px-4">
+        <div class="bg-white p-5 rounded-3xl shadow-md border border-orange-100 mb-6">
+            <label id="inputLabel" class="block text-sm font-bold text-slate-700 mb-2">چه موادی تو خونه داری؟</label>
+            <textarea id="ingredients" rows="3" 
+                class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm leading-relaxed"
+                placeholder="مثلاً: سیب‌زمینی، تخم‌مرغ، پیاز، پنیر پیتزا..."></textarea>
+            
+            <!-- Quick Tags -->
+            <div id="quickTags" class="flex flex-wrap gap-1.5 mt-3 mb-4"></div>
+
+            <button onclick="generateRecipes()" id="btn"
+                class="w-full bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-orange-500/30 transition flex items-center justify-center gap-2">
+                <span id="btnText">پیشنهاد غذا با هوش مصنوعی ✨</span>
+            </button>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="hidden flex-col items-center justify-center py-10">
+            <div class="loader rounded-full border-4 border-slate-200 h-12 w-12 mb-3"></div>
+            <p id="loadingText" class="text-sm text-slate-600 font-bold">هوش مصنوعی در حال پخت‌وپز و عکاسی...</p>
+        </div>
+
+        <!-- Results -->
+        <div id="results" class="space-y-5"></div>
+    </main>
+
+    <script>
+        let currentLang = 'fa';
+
+        const translations = {
+            fa: {
+                dir: 'rtl',
+                langName: 'Persian (فارسی)',
+                title: 'سرآشپز هوشمند 👩‍🍳',
+                sub: 'مواد اولیه رو بگو، غذا و عکسش رو تحویل بگیر!',
+                label: 'چه موادی تو خونه داری؟',
+                placeholder: 'مثلاً: سیب‌زمینی، تخم‌مرغ، پیاز، پنیر پیتزا...',
+                btn: 'پیشنهاد غذا با هوش مصنوعی ✨',
+                loading: 'هوش مصنوعی در حال پخت‌وپز و عکاسی...',
+                emptyAlert: 'لطفاً چند ماده اولیه وارد کن!',
+                ingTitle: '🛒 مواد لازم:',
+                stepsTitle: '👩‍🍳 طرز تهیه:',
+                error: 'خطا در ارتباط! دوباره دکمه رو بزن.',
+                tags: ['مرغ', 'سیب‌زمینی', 'تخم‌مرغ', 'گوشت چرخ‌کرده', 'قارچ', 'بادمجان', 'گوجه‌فرنگی']
+            },
+            en: {
+                dir: 'ltr',
+                langName: 'English',
+                title: 'AI Smart Chef 👩‍🍳',
+                sub: 'Enter your ingredients, get recipes & photos!',
+                label: 'What ingredients do you have?',
+                placeholder: 'e.g., Potato, Egg, Onion, Cheese, Chicken...',
+                btn: 'Generate Recipes with AI ✨',
+                loading: 'AI is cooking and taking photos...',
+                emptyAlert: 'Please enter some ingredients first!',
+                ingTitle: '🛒 Ingredients:',
+                stepsTitle: '👩‍🍳 Instructions:',
+                error: 'Connection error! Please try again.',
+                tags: ['Chicken', 'Potato', 'Egg', 'Ground Beef', 'Mushroom', 'Eggplant', 'Tomato']
+            },
+            tr: {
+                dir: 'ltr',
+                langName: 'Turkish (Türkçe)',
+                title: 'Akıllı Şef 👩‍🍳',
+                sub: 'Malzemeleri yaz, yemek tarifini ve fotoğrafını al!',
+                label: 'Evde hangi malzemeler var?',
+                placeholder: 'Örn: Patates, Yumurta, Soğan, Kaşar peyniri...',
+                btn: 'Yapay Zeka ile Tarif Bul ✨',
+                loading: 'Yapay zeka yemekleri hazırlıyor...',
+                emptyAlert: 'Lütfen önce birkaç malzeme girin!',
+                ingTitle: '🛒 Malzemeler:',
+                stepsTitle: '👩‍🍳 Hazırlanışı:',
+                error: 'Bağlantı hatası! Lütfen tekrar deneyin.',
+                tags: ['Tavuk', 'Patates', 'Yumurta', 'Kıyma', 'Mantar', 'Patlıcan', 'Domates']
+            },
+            ar: {
+                dir: 'rtl',
+                langName: 'Arabic (العربية)',
+                title: 'الشيف الذكي 👩‍🍳',
+                sub: 'أدخل المكونات واحصل على الوصفات والصور!',
+                label: 'ما هي المكونات المتوفرة لديك؟',
+                placeholder: 'مثال: بطاطس، بيض، بصل، جبن، دجاج...',
+                btn: 'اقترح وجبات بالذكاء الاصطناعي ✨',
+                loading: 'الذكاء الاصطناعي يقوم بالطهي والتصوير...',
+                emptyAlert: 'يرجى إدخال بعض المكونات أولاً!',
+                ingTitle: '🛒 المكونات:',
+                stepsTitle: '👩‍🍳 طريقة التحضير:',
+                error: 'خطأ في الاتصال! حاول مرة أخرى.',
+                tags: ['دجاج', 'بطاطس', 'بيض', 'لحم مفروم', 'فطر', 'باذنجان', 'طماطم']
+            }
+        };
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            const htmlTag = document.getElementById('htmlTag');
+            
+            htmlTag.setAttribute('dir', t.dir);
+            htmlTag.setAttribute('lang', lang);
+
+            document.getElementById('appTitle').innerText = t.title;
+            document.getElementById('appSub').innerText = t.sub;
+            document.getElementById('inputLabel').innerText = t.label;
+            document.getElementById('ingredients').placeholder = t.placeholder;
+            document.getElementById('ingredients').value = '';
+            document.getElementById('btnText').innerText = t.btn;
+            document.getElementById('loadingText').innerText = t.loading;
+            document.getElementById('results').innerHTML = '';
+
+            renderTags();
+        }
+
+        function renderTags() {
+            const t = translations[currentLang];
+            const container = document.getElementById('quickTags');
+            container.innerHTML = t.tags.map(tag => 
+                `<button onclick="addItem('${tag}')" class="text-xs bg-orange-50 hover:bg-orange-100 text-orange-700 px-3 py-1.5 rounded-full border border-orange-200 transition">+ ${tag}</button>`
+            ).join('');
+        }
+
+        function addItem(item) {
+            const el = document.getElementById('ingredients');
+            const sep = (currentLang === 'fa' || currentLang === 'ar') ? '، ' : ', ';
+            if (!el.value.trim()) el.value = item;
+            else if (!el.value.includes(item)) el.value += sep + item;
+        }
+
+        async function generateRecipes() {
+            const t = translations[currentLang];
+            const input = document.getElementById('ingredients').value.trim();
+            if (!input) return alert(t.emptyAlert);
+
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            results.innerHTML = '';
+            loading.classList.remove('hidden');
+            loading.classList.add('flex');
+
+            try {
+                const prompt = `Ingredients available: "${input}". Suggest 3 delicious dishes that can be made with these. Write all text values (name, time, ing, steps) strictly in ${t.langName} language, except "en" which must be in English for image generation. Return ONLY a valid JSON array with no extra text: [{"name":"Dish name in ${t.langName}","en":"English dish name","time":"Cooking time in ${t.langName}","ing":"Ingredients list in ${t.langName}","steps":"Step by step instructions in ${t.langName}"}]`;
+                
+                const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}?json=true`);
+                let text = await res.text();
+                text = text.replace(/```json|```/g, '').trim();
+                const recipes = JSON.parse(text);
+
+                results.innerHTML = recipes.map((r, i) => {
+                    const imgPrompt = encodeURIComponent(`Delicious ${r.en || r.name}, professional food photography, warm lighting, high resolution`);
+                    const imgUrl = `https://image.pollinations.ai/prompt/${imgPrompt}?width=700&height=500&nologo=true&seed=${Date.now() + i}`;
+                    return `
+                    <div class="bg-white rounded-3xl shadow-md border border-orange-100 overflow-hidden">
+                        <div class="relative h-52 bg-slate-100">
+                            <img src="${imgUrl}" alt="${r.name}" class="w-full h-full object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-black/60 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-full">⏱️ ${r.time}</span>
+                        </div>
+                        <div class="p-5">
+                            <h2 class="text-lg font-black text-slate-800 mb-3">${r.name}</h2>
+                            <div class="bg-orange-50 rounded-2xl p-3 mb-3 border border-orange-100">
+                                <b class="text-xs text-orange-800 block mb-1">${t.ingTitle}</b>
+                                <p class="text-xs text-slate-700 leading-relaxed">${r.ing}</p>
+                            </div>
+                            <div>
+                                <b class="text-xs text-slate-700 block mb-1">${t.stepsTitle}</b>
+                                <p class="text-xs text-slate-600 leading-6 whitespace-pre-line">${r.steps}</p>
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('');
+            } catch (err) {
+                results.innerHTML = `<div class="bg-red-50 text-red-600 p-4 rounded-2xl text-center text-sm font-bold">${t.error}</div>`;
+            } finally {
+                loading.classList.add('hidden');
+                loading.classList.remove('flex');
+            }
+        }
+
+        // Initialize tags on load
+        renderTags();
+    </script>
+</body>
+</html>

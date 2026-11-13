@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>طراح مفهومی خانه روی زمین</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EAEFF1;--ink:#14313B;--mid:#4B6B75;--line:#C5D3D8;--card:#fff;--acc:#0E7C86;--gold:#E6A817}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif;line-height:1.7}
+header{padding:28px 20px 8px;max-width:1100px;margin:auto}
+h1{margin:0;font-size:1.7rem;font-weight:800}
+header p{margin:6px 0 0;color:var(--mid);max-width:60ch}
+main{max-width:1100px;margin:auto;padding:12px 20px 40px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:16px}
+.panel h2{margin:0 0 12px;font-size:1.05rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+label{display:block;font-size:.85rem;color:var(--mid)}
+input[type=number],select{width:100%;margin-top:4px;padding:8px;border:1px solid var(--line);border-radius:6px;font:inherit;color:var(--ink);background:#fff}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:22px}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--acc);background:var(--acc);color:#fff;padding:10px 18px;font-weight:600}
+button.alt{background:#fff;color:var(--acc)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:10px;padding:12px;cursor:pointer;text-align:start}
+.card.sel{border-color:var(--acc)}
+.card h3{margin:0;display:flex;justify-content:space-between;align-items:center;font-size:1rem}
+.badge{background:var(--gold);color:var(--ink);font-size:.72rem;padding:1px 8px;border-radius:99px}
+.score{font-weight:800;font-size:1.3rem;color:var(--acc)}
+.bar{height:6px;background:var(--line);border-radius:3px;margin:2px 0 6px}
+.bar i{display:block;height:100%;background:var(--acc);border-radius:3px}
+.mrow{display:flex;justify-content:space-between;font-size:.8rem}
+.note{font-size:.85rem;color:var(--mid)}
+.warn{color:#9A3412;font-size:.85rem;margin:4px 0}
+.tabs{display:flex;gap:8px;margin:8px 0}
+.disc{font-size:.8rem;color:var(--mid);border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
+.lang{display:flex;gap:8px;margin-top:10px}.lang button{padding:3px 12px;font-size:.85rem}
+svg{width:100%;height:auto;display:block}
+.two{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+@media print{body{background:#fff}header,#form,#cards,.noprint{display:none!important}.panel{border:0}}
+</style>
+</head>
+<body>
+<header>
+<h1 data-i18n="title"></h1>
+<p data-i18n="intro"></p>
+<nav class="lang noprint" aria-label="Language"><button data-l="fa">فارسی</button><button data-l="en">English</button><button data-l="tr">Türkçe</button></nav>
+</header>
+<main>
+<section class="panel" id="form">
+<h2 data-i18n="h_land"></h2>
+<div class="grid">
+<label><span data-i18n="W"></span><input id="W" type="number" value="12" min="5" step="0.5"></label>
+<label><span data-i18n="D"></span><input id="D" type="number" value="25" min="5" step="0.5"></label>
+<label><span data-i18n="f"></span><input id="f" type="number" value="3" min="0" step="0.5"></label>
+<label><span data-i18n="b"></span><input id="b" type="number" value="2" min="0" step="0.5"></label>
+<label><span data-i18n="l"></span><input id="l" type="number" value="1.5" min="0" step="0.5"></label>
+<label><span data-i18n="r"></span><input id="r" type="number" value="1.5" min="0" step="0.5"></label>
+<label><span data-i18n="north"></span>
+<select id="north"><option value="top" data-i18n="d_top"></option><option value="right" data-i18n="d_right"></option><option value="bottom" data-i18n="d_bottom"></option><option value="left" data-i18n="d_left"></option></select></label>
+<label><span data-i18n="st2"></span><select id="st2"><option value="none" data-i18n="st_none"></option><option value="left" data-i18n="st_left"></option><option value="right" data-i18n="st_right"></option></select></label>
+</div>
+<h2 style="margin-top:18px" data-i18n="h_needs"></h2>
+<div class="grid">
+<label><span data-i18n="floors"></span><select id="floors"><option>1</option><option selected>2</option></select></label>
+<label><span data-i18n="bed"></span><select id="bed"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
+<label><span data-i18n="cars"></span><select id="cars"><option>0</option><option selected>1</option><option>2</option></select></label>
+<label class="chk"><input id="yard" type="checkbox" checked> <span data-i18n="yard"></span></label>
+</div>
+<h2 style="margin-top:18px" data-i18n="h_prio"></h2>
+<div class="grid">
+<label><span data-i18n="p_light"></span><input id="p_light" type="range" min="1" max="5" value="4"></label>
+<label><span data-i18n="p_priv"></span><input id="p_priv" type="range" min="1" max="5" value="3"></label>
+<label><span data-i18n="p_space"></span><input id="p_space" type="range" min="1" max="5" value="3"></label>
+<label><span data-i18n="p_circ"></span><input id="p_circ" type="range" min="1" max="5" value="2"></label>
+<label><span data-i18n="p_util"></span><input id="p_util" type="range" min="1" max="5" value="2"></label>
+</div>
+<p><button id="go" data-i18n="go"></button></p>
+<div id="err" class="warn" role="alert"></div>
+</section>
+
+<section id="out" hidden>
+<div class="panel"><div id="sum" class="note"></div></div>
+<div class="cards" id="cards" role="list"></div>
+<div class="panel" id="detail" style="margin-top:16px"></div>
+</section>
+<p class="disc" data-i18n="disc"></p>
+</main>
+
+<script>
+/* ========== Utilities ========== */
+const $=id=>document.getElementById(id);
+let lang='en';
+try{lang=localStorage.getItem('lang')}catch(e){}
+const L={
+fa:{title:'طراح مفهومی خانه روی زمین',intro:'زمین و نیازهایت را وارد کن؛ برنامه چند چیدمان مفهومی می‌سازد و آن‌ها را از نظر نور، حریم خصوصی، فضای مفید، گردش و تأسیسات مقایسه می‌کند.',
+h_land:'۱. زمین (متر، خیابان در پایین نقشه)',W:'عرض زمین',D:'عمق زمین',f:'عقب‌نشینی جلو',b:'عقب‌نشینی پشت',l:'عقب‌نشینی چپ',r:'عقب‌نشینی راست',north:'شمال در نقشه کدام سمت است؟',d_top:'بالا',d_right:'راست',d_bottom:'پایین',d_left:'چپ',st2:'خیابان دوم (زمین گوشه)',st_none:'ندارد',st_left:'سمت چپ',st_right:'سمت راست',
+h_needs:'۲. نیازها',floors:'تعداد طبقه',bed:'اتاق خواب',cars:'پارکینگ (خودرو)',yard:'حیاط می‌خواهم',h_prio:'۳. اولویت‌ها (۱ کم‌اهمیت تا ۵ بسیار مهم)',p_light:'نورگیری',p_priv:'حریم خصوصی',p_space:'فضای مفید',p_circ:'گردش ساده',p_util:'کوتاهی مسیر تأسیسات',go:'تولید و مقایسه طرح‌ها',
+disc:'فرض‌ها: زمین مستطیلی و در نیمکره شمالی است و نور جنوبی بهترین نور حساب می‌شود. عقب‌نشینی‌ها را خودت وارد کرده‌ای و از منبع رسمی تأیید نشده‌اند. همه خروجی‌ها «طرح مفهومی» هستند، نه نقشه اجرایی و نه تأیید انطباق قانونی؛ تأیید نهایی با معمار و مرجع صدور مجوز است. امتیاز تأسیسات فقط نزدیکی آشپزخانه و سرویس‌ها را می‌سنجد و جایگزین طراحی تأسیسات نیست.',
+n_light:'نورگیری',n_priv:'حریم خصوصی',n_space:'فضای مفید',n_circ:'گردش',n_util:'تأسیسات (تخمینی)',
+a_back:'ساختمان در عقب زمین',a_front:'ساختمان در جلوی زمین',a_left:'ساختمان کنار چپ',a_right:'ساختمان کنار راست',a_center:'ساختمان در وسط زمین',
+r_living:'نشیمن',r_kitchen:'آشپزخانه',r_bed:'اتاق خواب',r_bath:'سرویس',r_stair:'پله',r_multi:'چندمنظوره',
+s_park:'پارکینگ',s_yard:'حیاط',s_open:'فضای باز',s_entr:'ورودی',s_street:'خیابان',s_street2:'خیابان دوم',s_plot:'زمین {0} × {1} متر',s_n:'ش',s_m2:'م²',s_aria:'پلان مفهومی',
+sum:'مساحت زمین {0} متر مربع، محدوده قابل ساخت {1} × {2} متر. {3} طرح ساخته و رتبه‌بندی شد.',corner:' زمین گوشه: حریم خصوصی سمت خیابان دوم کمتر حساب شد.',
+err1:'ابعاد زمین را درست وارد کن (حداقل ۵ متر).',err2:'با این عقب‌نشینی‌ها محدوده قابل ساخت کمتر از ۵ متر است.',layout:'طرح',badge:'امتیاز بالاتر',
+dtitle:'جزئیات طرح {0} — امتیاز {1} از ۱۰۰',concept:'(طرح مفهومی)',tab0:'طبقه همکف',tab1:'طبقه بالا',
+facts:'زیربنای هر طبقه حدود {0} متر مربع؛ {1}؛ فضای باز اصلی حدود {2} متر مربع.',parkok:'پارکینگ {0} خودرو جا شد',parkno:'پارکینگ جا نشد',
+w_park:'پارکینگ در زمین جا نمی‌شود.',w_yard:'حیاط باقی‌مانده کوچک است.',w_viol:'{0} فضا از حداقل ابعاد پیشنهادی کوچک‌تر است.',w_sat:'زمین برای برنامه کامل کوچک است؛ {0}٪ از زیربنای موردنیاز تأمین نشد.',
+save:'ذخیره تصویر',print:'چاپ / PDF',ddisc:'طرح مفهومی؛ انطباق قانونی و ابعاد اجرایی تأیید نشده است. نیازمند بررسی معمار.',pngcap:'طرح مفهومی — انطباق قانونی تأیید نشده',
+e_both:'نسبت به بقیه، {0} بهتر و {1} ضعیف‌تر است.',e_best:'{0} این طرح از بقیه بهتر است.',e_none:'تفاوت این طرح با بقیه کم است.'},
+en:{title:'Concept House Designer for Your Plot',intro:'Enter your plot and needs. The app generates several concept layouts and compares them by daylight, privacy, usable space, circulation and utilities.',
+h_land:'1. Plot (meters, street at the bottom of the plan)',W:'Plot width',D:'Plot depth',f:'Front setback',b:'Back setback',l:'Left setback',r:'Right setback',north:'Which side of the plan is north?',d_top:'Top',d_right:'Right',d_bottom:'Bottom',d_left:'Left',st2:'Second street (corner plot)',st_none:'None',st_left:'Left side',st_right:'Right side',
+h_needs:'2. Needs',floors:'Number of floors',bed:'Bedrooms',cars:'Parking (cars)',yard:'I want a yard',h_prio:'3. Priorities (1 = low, 5 = very important)',p_light:'Daylight',p_priv:'Privacy',p_space:'Usable space',p_circ:'Simple circulation',p_util:'Short utility runs',go:'Generate and compare layouts',
+disc:'Assumptions: the plot is rectangular and in the northern hemisphere, so south light counts as best. Setbacks are entered by you and are not verified against official sources. All outputs are concept layouts, not construction drawings and not confirmation of code compliance; final approval rests with an architect and the permitting authority. The utilities score only measures how close the kitchen and bathrooms are and does not replace utilities design.',
+n_light:'Daylight',n_priv:'Privacy',n_space:'Usable space',n_circ:'Circulation',n_util:'Utilities (estimate)',
+a_back:'Building at the back of the plot',a_front:'Building at the front of the plot',a_left:'Building on the left side',a_right:'Building on the right side',a_center:'Building in the middle of the plot',
+r_living:'Living',r_kitchen:'Kitchen',r_bed:'Bedroom',r_bath:'Bath',r_stair:'Stairs',r_multi:'Multi-use',
+s_park:'Parking',s_yard:'Yard',s_open:'Open space',s_entr:'Entrance',s_street:'Street',s_street2:'Second street',s_plot:'Plot {0} × {1} m',s_n:'N',s_m2:'m²',s_aria:'Concept plan',
+sum:'Plot area {0} m², buildable area {1} × {2} m. {3} layouts generated and ranked.',corner:' Corner plot: privacy toward the second street is rated lower.',
+err1:'Enter valid plot dimensions (at least 5 m).',err2:'With these setbacks the buildable area is under 5 m.',layout:'Layout',badge:'Highest score',
+dtitle:'Layout {0} details — score {1} of 100',concept:'(concept)',tab0:'Ground floor',tab1:'Upper floor',
+facts:'Footprint per floor about {0} m²; {1}; main open space about {2} m².',parkok:'parking fits {0} car(s)',parkno:'parking does not fit',
+w_park:'Parking does not fit on the plot.',w_yard:'The remaining yard is small.',w_viol:'{0} space(s) are below the suggested minimum size.',w_sat:'The plot is small for the full program; {0}% of the required floor area is not provided.',
+save:'Save image',print:'Print / PDF',ddisc:'Concept layout; code compliance and construction dimensions are not verified. Requires review by an architect.',pngcap:'Concept layout — code compliance not verified',
+e_both:'Compared with the others, {0} is better and {1} is weaker.',e_best:'This layout is better than the rest in {0}.',e_none:'This layout differs little from the others.'},
+tr:{title:'Arsa Üzerinde Konsept Ev Tasarımcısı',intro:'Arsanızı ve ihtiyaçlarınızı girin. Uygulama birkaç konsept yerleşim üretir ve bunları gün ışığı, mahremiyet, kullanılabilir alan, sirkülasyon ve tesisat açısından karşılaştırır.',
+h_land:'1. Arsa (metre, cadde planın altında)',W:'Arsa genişliği',D:'Arsa derinliği',f:'Ön çekme mesafesi',b:'Arka çekme mesafesi',l:'Sol çekme mesafesi',r:'Sağ çekme mesafesi',north:'Planda kuzey hangi yönde?',d_top:'Üst',d_right:'Sağ',d_bottom:'Alt',d_left:'Sol',st2:'İkinci cadde (köşe arsa)',st_none:'Yok',st_left:'Sol taraf',st_right:'Sağ taraf',
+h_needs:'2. İhtiyaçlar',floors:'Kat sayısı',bed:'Yatak odası',cars:'Otopark (araç)',yard:'Bahçe istiyorum',h_prio:'3. Öncelikler (1 = az önemli, 5 = çok önemli)',p_light:'Gün ışığı',p_priv:'Mahremiyet',p_space:'Kullanılabilir alan',p_circ:'Basit sirkülasyon',p_util:'Kısa tesisat hatları',go:'Yerleşimleri üret ve karşılaştır',
+disc:'Varsayımlar: arsa dikdörtgendir ve kuzey yarımkürededir; güney ışığı en iyi sayılır. Çekme mesafelerini siz girersiniz ve resmî kaynaklardan doğrulanmamıştır. Tüm çıktılar konsept yerleşimdir; uygulama projesi değildir ve yönetmeliğe uygunluk onayı anlamına gelmez; nihai onay mimara ve ruhsat makamına aittir. Tesisat puanı yalnızca mutfak ve banyoların yakınlığını ölçer, tesisat projesinin yerine geçmez.',
+n_light:'Gün ışığı',n_priv:'Mahremiyet',n_space:'Kullanılabilir alan',n_circ:'Sirkülasyon',n_util:'Tesisat (tahmini)',
+a_back:'Bina arsanın arkasında',a_front:'Bina arsanın önünde',a_left:'Bina sol tarafta',a_right:'Bina sağ tarafta',a_center:'Bina arsanın ortasında',
+r_living:'Salon',r_kitchen:'Mutfak',r_bed:'Yatak odası',r_bath:'Banyo',r_stair:'Merdiven',r_multi:'Çok amaçlı',
+s_park:'Otopark',s_yard:'Bahçe',s_open:'Açık alan',s_entr:'Giriş',s_street:'Cadde',s_street2:'İkinci cadde',s_plot:'Arsa {0} × {1} m',s_n:'K',s_m2:'m²',s_aria:'Konsept plan',
+sum:'Arsa alanı {0} m², yapılabilir alan {1} × {2} m. {3} yerleşim üretildi ve sıralandı.',corner:' Köşe arsa: ikinci cadde yönündeki mahremiyet daha düşük puanlandı.',
+err1:'Arsa ölçülerini doğru girin (en az 5 m).',err2:'Bu çekme mesafeleriyle yapılabilir alan 5 m’nin altında.',layout:'Yerleşim',badge:'En yüksek puan',
+dtitle:'Yerleşim {0} ayrıntıları — puan {1}/100',concept:'(konsept)',tab0:'Zemin kat',tab1:'Üst kat',
+facts:'Kat başına taban alanı yaklaşık {0} m²; {1}; ana açık alan yaklaşık {2} m².',parkok:'otopark {0} araç alıyor',parkno:'otopark sığmıyor',
+w_park:'Otopark arsaya sığmıyor.',w_yard:'Kalan bahçe küçük.',w_viol:'{0} mekân önerilen asgari ölçüden küçük.',w_sat:'Arsa tam program için küçük; gereken alanın %{0}’i karşılanamadı.',
+save:'Görseli kaydet',print:'Yazdır / PDF',ddisc:'Konsept yerleşim; yönetmeliğe uygunluk ve uygulama ölçüleri doğrulanmamıştır. Mimar incelemesi gerekir.',pngcap:'Konsept yerleşim — yönetmeliğe uygunluk doğrulanmadı',
+e_both:'Diğerlerine göre {0} daha iyi, {1} daha zayıf.',e_best:'Bu yerleşim {0} bakımından diğerlerinden daha iyi.',e_none:'Bu yerleşim diğerlerinden çok az farklı.'}
+};
+if(!L[lang]){const nl=(typeof navigator!='undefined'&&navigator.language||'en').slice(0,2);lang=L[nl]?nl:'en'}
+const t=(k,...a)=>(L[lang][k]||L.en[k]||k).replace(/\{(\d)\}/g,(_,i)=>a[i]);
+const loc=()=>({fa:'fa-IR',en:'en-US',tr:'tr-TR'}[lang]);
+const fa=n=>Number(n).toLocaleString(loc(),{maximumFractionDigits:0});
+const fa1=n=>Number(n).toLocaleString(loc(),{maximumFractionDigits:1});
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const DIRS=['top','right','bottom','left'];
+const NAMES={light:1,priv:1,space:1,circ:1,util:1};
+
+/* ========== Geometry (independent of display) ========== */
+const Geo={
+  buildable:p=>({x:p.l,y:p.b,w:p.W-p.l-p.r,h:p.D-p.b-p.f}),
+  center:r=>({x:r.x+r.w/2,y:r.y+r.h/2}),
+  compass:(dir,north)=>(DIRS.indexOf(dir)-DIRS.indexOf(north)+4)%4, // 0=N 1=E 2=S 3=W
+  dist:(a,b)=>Math.hypot(a.x-b.x,a.y-b.y)
+};
+
+/* ========== Spatial program ========== */
+const R={living:['نشیمن',30],kitchen:['آشپزخانه',14],bed:['اتاق خواب',13],bath:['سرویس',5],stair:['پله',10],multi:['چندمنظوره',16]};
+const mk=t=>({type:t,name:R[t][0],area:R[t][1]});
+function program(n){
+  const baths=Math.max(1,Math.ceil(n.bed/2));
+  const many=(t,k)=>Array.from({length:k},()=>mk(t));
+  if(n.floors==1){
+    const all=[...many('bed',n.bed),...many('bath',baths)];
+    const A=[mk('living'),mk('kitchen')],B=[];let sa=44;
+    const tot=44+all.reduce((s,r)=>s+r.area,0);
+    all.forEach(r=>{if(sa<tot/2){A.push(r);sa+=r.area}else B.push(r)});
+    return [{A,B}];
+  }
+  const st=()=>({...mk('stair'),fixed:3});
+  const g={A:[mk('living'),mk('kitchen')],B:[st(),...many('bed',1),...many('bath',1)]};
+  const up=[...many('bed',n.bed-1),...many('bath',Math.max(1,baths-1))];
+  if(n.bed<2)up.unshift(mk('multi'));
+  const h=Math.ceil(up.length/2);
+  return [g,{A:up.slice(0,h),B:[st(),...up.slice(h)]}];
+}
+
+/* ========== Layout generator ========== */
+function strip(items,x,y,w,h,axis){
+  const L=axis=='x'?w:h;
+  const fix=items.reduce((s,i)=>s+(i.fixed||0),0);
+  const vr=items.reduce((s,i)=>s+(i.fixed?0:i.area),0)||1;
+  const rest=Math.max(0,L-fix);let pos=0;
+  return items.map(i=>{
+    const len=i.fixed||rest*i.area/vr;
+    const r=axis=='x'?{x:x+pos,y,w:len,h}:{x,y:y+pos,w,h:len};
+    pos+=len;return {...i,...r};
+  });
+}
+function layout(fp,fl,c){
+  const k=0.55;
+  if(c.axis=='x'){
+    const hA=fp.h*k,hB=fp.h-hA;
+    const yA=c.aFirst?fp.y:fp.y+hB,yB=c.aFirst?fp.y+hA:fp.y;
+    return [...strip(fl.A,fp.x,yA,fp.w,hA,'x'),...strip(fl.B,fp.x,yB,fp.w,hB,'x')];
+  }
+  const wA=fp.w*k,wB=fp.w-wA;
+  const xA=c.aFirst?fp.x:fp.x+wB,xB=c.aFirst?fp.x+wA:fp.x;
+  return [...strip(fl.A,xA,fp.y,wA,fp.h,'y'),...strip(fl.B,xB,fp.y,wB,fp.h,'y')];
+}
+function footprint(b,F,c){
+  let w=Math.sqrt(F*c.r),h=F/w;
+  if(w>b.w){w=b.w;h=F/w}
+  if(h>b.h){h=b.h;w=Math.min(b.w,F/h)}
+  const cx=b.x+(b.w-w)/2,cy=b.y+(b.h-h)/2;
+  const pos={back:[cx,b.y],front:[cx,b.y+b.h-h],left:[b.x,cy],right:[b.x+b.w-w,cy],center:[cx,cy]}[c.anchor];
+  return {x:pos[0],y:pos[1],w,h};
+}
+function freeStrips(p,fp){
+  return [
+    {side:'bottom',x:0,y:fp.y+fp.h,w:p.W,h:p.D-fp.y-fp.h},
+    {side:'left',x:0,y:fp.y,w:fp.x,h:fp.h},
+    {side:'right',x:fp.x+fp.w,y:fp.y,w:p.W-fp.x-fp.w,h:fp.h},
+    {side:'top',x:0,y:0,w:p.W,h:fp.y}
+  ].filter(s=>s.w>0.5&&s.h>0.5);
+}
+function park(strips,n){
+  if(!n)return {cars:[],strip:null,ok:true};
+  for(const s of strips){
+    for(const [a,b] of [[2.7,5.5],[5.5,2.7]]){
+      if(s.h>=b&&Math.floor(s.w/a)>=n)
+        return {ok:true,strip:s,cars:Array.from({length:n},(_,i)=>({x:s.x+i*a,y:s.side=='top'?s.y:s.y+s.h-b,w:a,h:b}))};
+      if(s.w>=a&&Math.floor(s.h/b)>=n)
+        return {ok:true,strip:s,cars:Array.from({length:n},(_,i)=>({x:s.side=='left'?s.x:s.x+s.w-a,y:s.y+s.h-(i+1)*b,w:a,h:b}))};
+    }
+  }
+  return {cars:[],strip:null,ok:false};
+}
+const CONFIGS=[
+  {anchor:'back',r:1.6,axis:'x',aFirst:false},
+  {anchor:'back',r:1.6,axis:'x',aFirst:true},
+  {anchor:'front',r:1.4,axis:'x',aFirst:true},
+  {anchor:'left',r:0.9,axis:'y',aFirst:true},
+  {anchor:'right',r:0.9,axis:'y',aFirst:false},
+  {anchor:'center',r:1.2,axis:'x',aFirst:false}
+];
+function build(p,n,c){
+  const b=Geo.buildable(p),prog=program(n);
+  const F=Math.max(...prog.map(f=>[...f.A,...f.B].reduce((s,r)=>s+r.area,0)))*1.1;
+  const fp=footprint(b,F,c);
+  const floors=prog.map(f=>layout(fp,f,c));
+  const strips=freeStrips(p,fp),pk=park(strips,n.cars);
+  return {c,fp,F,floors,pk,yard:strips.filter(s=>s!==pk.strip)};
+}
+
+/* ========== Evaluation ========== */
+function evaluate(d,p,n){
+  const fp=d.fp;
+  const gap={top:fp.y,bottom:p.D-fp.y-fp.h,left:fp.x,right:p.W-fp.x-fp.w};
+  const ext=r=>{const e=[],t=.05;
+    if(Math.abs(r.x-fp.x)<t)e.push('left');
+    if(Math.abs(r.x+r.w-fp.x-fp.w)<t)e.push('right');
+    if(Math.abs(r.y-fp.y)<t)e.push('top');
+    if(Math.abs(r.y+r.h-fp.y-fp.h)<t)e.push('bottom');return e};
+  const WL=[.3,.6,1,.6],E={x:p.W/2,y:p.D};
+  let ls=0,lw=0,ps=0,pc=0,viol=0,use=0,cs=0,cc=0;const wet=[];
+  d.floors.forEach((fl,fi)=>fl.forEach(r=>{
+    if(r.type=='stair')return;
+    if(Math.min(r.w,r.h)<(r.type=='bed'?2.4:2.2))viol++;
+    use+=r.w*r.h;
+    if(r.type=='kitchen'||r.type=='bath')wet.push(Geo.center(r));
+    cs+=Geo.dist(E,Geo.center(r))+(fi?5:0);cc++;
+    if(['living','kitchen','bed','multi'].includes(r.type)){
+      const w=r.type=='living'?2:1;
+      const best=Math.max(0,...ext(r).map(s=>WL[Geo.compass(s,n.north)]*(gap[s]<2?.5:1)));
+      ls+=w*best;lw+=w;
+    }
+    if(r.type=='bed'){
+      const es=ext(r);
+      ps+=es.length?es.reduce((s,k)=>s+clamp(gap[k]*(k=='bottom'||k==n.st2?.6:1)/6),0)/es.length:.5;pc++;
+    }
+  }));
+  const area=fp.w*fp.h,sat=clamp(area/d.F);
+  const ratio=use/(area*n.floors);
+  const circR=(cs/cc)/Math.sqrt(area);
+  let ds=0,dn=0;for(let i=0;i<wet.length;i++)for(let j=i+1;j<wet.length;j++){ds+=Geo.dist(wet[i],wet[j]);dn++}
+  const utilR=dn?(ds/dn)/Math.sqrt(area):0;
+  const yardBig=d.yard.reduce((m,s)=>Math.max(m,s.w*s.h),0);
+  const yardOK=yardBig>=25&&d.yard.some(s=>Math.min(s.w,s.h)>=3);
+  d.m={light:lw?ls/lw:0,priv:pc?ps/pc:.5,space:.5*clamp((ratio-.75)/.2)+.5*sat,circ:clamp((2.2-circR)/1.2),util:clamp((0.5-utilR)/.15)};
+  d.warn=[];
+  d.pen=0;
+  if(!d.pk.ok){d.pen+=15;d.warn.push(['w_park'])}
+  if(n.yard&&!yardOK){d.pen+=10;d.warn.push(['w_yard'])}
+  if(viol){d.pen+=Math.min(20,viol*4);d.warn.push(['w_viol',viol])}
+  if(sat<.95)d.warn.push(['w_sat',Math.round((1-sat)*100)]);
+  d.yardArea=yardBig;
+  d.sat=sat;
+}
+function total(d,w){
+  let s=0,t=0;for(const k in NAMES){s+=w[k]*d.m[k];t+=w[k]}
+  return Math.round(clamp(s/t*100-d.pen,0,100));
+}
+function explain(d,all){
+  const mean=k=>all.reduce((s,x)=>s+x.m[k],0)/all.length;
+  const df=Object.keys(NAMES).map(k=>[k,d.m[k]-mean(k)]).sort((a,b)=>b[1]-a[1]);
+  const best=df[0],worst=df[df.length-1],nm=k=>t('n_'+k).toLocaleLowerCase(lang);
+  let x;
+  if(best[1]>.03&&worst[1]<-.03)x=t('e_both',nm(best[0]),nm(worst[0]));
+  else if(best[1]>.03)x=t('e_best',nm(best[0]));
+  else x=t('e_none');
+  return `${t('a_'+d.c.anchor)}. ${x}`;
+}
+
+/* ========== Rendering ========== */
+const FILL={living:'#F6E7B8',kitchen:'#F3D3B5',bed:'#D5E4F0',bath:'#C9E8E5',stair:'#E4E4E4',multi:'#E8DDF0'};
+function svg(d,fi,p,n){
+  const {W,D}=p,o=[];
+  const txt=(x,y,s,tx,c='#14313B')=>`<text x="${x}" y="${y}" font-size="${s}" text-anchor="middle" dominant-baseline="middle" fill="${c}" font-family="Vazirmatn,Tahoma,sans-serif">${tx}</text>`;
+  o.push(`<rect x="0" y="0" width="${W}" height="${D}" fill="#fff" stroke="#14313B" stroke-width=".2"/>`);
+  d.yard.forEach(s=>o.push(`<rect x="${s.x}" y="${s.y}" width="${s.w}" height="${s.h}" fill="#CFE6D2"/>`));
+  if(d.pk.strip){const s=d.pk.strip;o.push(`<rect x="${s.x}" y="${s.y}" width="${s.w}" height="${s.h}" fill="#E1E4E6"/>`);
+    d.pk.cars.forEach(c=>o.push(`<rect x="${c.x}" y="${c.y}" width="${c.w}" height="${c.h}" rx=".3" fill="#fff" stroke="#6B7C83" stroke-width=".1"/>`));
+    const cc=Geo.center(s);o.push(txt(cc.x,s.y+.8,.7,t('s_park'),'#4B6B75'));}
+  const big=[...d.yard].sort((a,b)=>b.w*b.h-a.w*a.h)[0];
+  if(big&&big.w*big.h>15){const c=Geo.center(big);o.push(txt(c.x,c.y,.9,n.yard?t('s_yard'):t('s_open'),'#2F6B3A'))}
+  const b=Geo.buildable(p);
+  o.push(`<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" fill="none" stroke="#6B7C83" stroke-width=".1" stroke-dasharray=".5 .4"/>`);
+  d.floors[fi].forEach(r=>{
+    const nm=t('r_'+r.type);
+    o.push(`<rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" fill="${FILL[r.type]}" stroke="#14313B" stroke-width=".15"/>`);
+    if(r.type=='stair'){for(let y=r.y+.4;y<r.y+r.h-.2;y+=.45)o.push(`<line x1="${r.x+.3}" x2="${r.x+r.w-.3}" y1="${y}" y2="${y}" stroke="#14313B" stroke-width=".05"/>`)}
+    const fs=Math.min(.85,r.w/(nm.length*.6+.4),r.h/3);
+    if(fs>.35&&r.type!='stair'){const c=Geo.center(r);o.push(txt(c.x,c.y-fs*.6,fs,nm));o.push(txt(c.x,c.y+fs*.7,fs*.85,fa(r.w*r.h)+' '+t('s_m2'),'#4B6B75'))}
+  });
+  o.push(`<polygon points="${W/2-.8},${D+1} ${W/2+.8},${D+1} ${W/2},${D-.2}" fill="#E6A817"/>`);
+  o.push(txt(W/2,D+1.8,.8,t('s_entr')));
+  o.push(txt(W/2,D+3,.8,t('s_street'),'#4B6B75'));
+  if(n.st2&&n.st2!='none'){const sx=n.st2=='left'?-.6:W+.6;o.push(`<text transform="translate(${sx} ${D/2}) rotate(-90)" font-size=".8" text-anchor="middle" fill="#4B6B75" font-family="Vazirmatn,Tahoma,sans-serif">${t('s_street2')}</text>`)}
+  o.push(txt(W/2,-1.5,.9,t('s_plot',fa1(W),fa1(D))));
+  const v={top:[0,-1],right:[1,0],bottom:[0,1],left:[-1,0]}[n.north],cx=W-2.5,cy=-2;
+  const tx=cx+v[0]*1.3,ty=cy+v[1]*1.3,px=-v[1]*.45,py=v[0]*.45;
+  o.push(`<circle cx="${cx}" cy="${cy}" r="1.6" fill="none" stroke="#4B6B75" stroke-width=".08"/>`);
+  o.push(`<line x1="${cx-v[0]*1.1}" y1="${cy-v[1]*1.1}" x2="${tx}" y2="${ty}" stroke="#14313B" stroke-width=".12"/>`);
+  o.push(`<polygon points="${tx+v[0]*.4},${ty+v[1]*.4} ${tx+px},${ty+py} ${tx-px},${ty-py}" fill="#14313B"/>`);
+  o.push(txt(cx+v[0]*2.3,cy+v[1]*2.3,.8,t('s_n')));
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -4 ${W+2} ${D+7.2}" role="img" aria-label="${t('s_aria')}">${o.join('')}</svg>`;
+}
+
+/* ========== UI ========== */
+const S={};
+function readInputs(){
+  const g=id=>parseFloat($(id).value);
+  const p={W:g('W'),D:g('D'),f:g('f'),b:g('b'),l:g('l'),r:g('r')};
+  const n={north:$('north').value,st2:$('st2').value,floors:+$('floors').value,bed:+$('bed').value,cars:+$('cars').value,yard:$('yard').checked};
+  const w={light:+$('p_light').value,priv:+$('p_priv').value,space:+$('p_space').value,circ:+$('p_circ').value,util:+$('p_util').value};
+  return {p,n,w};
+}
+function generate(){
+  const {p,n,w}=readInputs();
+  const bad=Object.values(p).some(v=>isNaN(v)||v<0);
+  const b=Geo.buildable(p);
+  $('err').textContent='';
+  if(bad||p.W<5||p.D<5){$('err').textContent=t('err1');return}
+  if(b.w<5||b.h<5){$('err').textContent=t('err2');return}
+  const designs=CONFIGS.map(c=>build(p,n,c));
+  designs.forEach(d=>evaluate(d,p,n));
+  designs.forEach(d=>d.score=total(d,w));
+  designs.sort((a,b)=>b.score-a.score);
+  designs.forEach((d,i)=>{d.id='ABCDEF'[i]});
+  Object.assign(S,{p,n,w,designs,sel:0,fl:0});
+  $('out').hidden=false;
+  renderAll();
+  $('out').scrollIntoView({behavior:'smooth'});
+}
+function renderAll(){
+  const b=Geo.buildable(S.p);
+  $('sum').textContent=t('sum',fa(S.p.W*S.p.D),fa1(b.w),fa1(b.h),fa(S.designs.length))+(S.n.st2!='none'?t('corner'):'');
+  renderCards();renderDetail();
+}
+function bars(d){return Object.keys(NAMES).map(k=>`<div class="mrow"><span>${t('n_'+k)}</span><span>${fa(d.m[k]*100)}</span></div><div class="bar"><i style="width:${d.m[k]*100}%"></i></div>`).join('')}
+function renderCards(){
+  $('cards').innerHTML=S.designs.map((d,i)=>`<button class="card ${i==S.sel?'sel':''}" data-i="${i}" role="listitem" aria-label="${t('layout')} ${d.id}">
+  <h3><span>${t('layout')} ${d.id} ${i==0?`<span class="badge">${t('badge')}</span>`:''}</span><span class="score">${fa(d.score)}</span></h3>
+  ${svg(d,0,S.p,S.n)}${bars(d)}<div class="note">${explain(d,S.designs)}</div></button>`).join('');
+  $('cards').querySelectorAll('.card').forEach(el=>el.onclick=()=>{S.sel=+el.dataset.i;S.fl=0;renderCards();renderDetail();$('detail').scrollIntoView({behavior:'smooth'})});
+}
+function renderDetail(){
+  const d=S.designs[S.sel];
+  const tabs=d.floors.length>1?`<div class="tabs noprint">${d.floors.map((_,i)=>`<button class="${i==S.fl?'':'alt'}" data-f="${i}">${i?t('tab1'):t('tab0')}</button>`).join('')}</div>`:'';
+  const pk=d.pk.ok?t('parkok',fa(S.n.cars)):t('parkno');
+  $('detail').innerHTML=`<h2>${t('dtitle',d.id,fa(d.score))} <span class="note">${t('concept')}</span></h2>${tabs}
+  <div class="two"><div id="big">${svg(d,S.fl,S.p,S.n)}</div><div>
+  ${bars(d)}
+  <p class="note">${explain(d,S.designs)}</p>
+  <p class="note">${t('facts',fa(d.fp.w*d.fp.h),pk,fa(d.yardArea))}</p>
+  ${d.warn.map(w=>`<div class="warn">⚠ ${t(w[0],w[1]==null?'':fa(w[1]))}</div>`).join('')}
+  <p class="noprint"><button id="png">${t('save')}</button> <button class="alt" id="prt">${t('print')}</button></p>
+  </div></div>
+  <div class="disc">${t('ddisc')}</div>`;
+  $('detail').querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{S.fl=+b.dataset.f;renderDetail()});
+  $('png').onclick=exportPNG;$('prt').onclick=()=>window.print();
+}
+function exportPNG(){
+  const s=$('big').querySelector('svg').cloneNode(true),vb=s.viewBox.baseVal;
+  const w=1600,h=Math.round(w*vb.height/vb.width);
+  s.setAttribute('width',w);s.setAttribute('height',h);
+  const img=new Image();
+  img.onload=()=>{
+    const c=document.createElement('canvas');c.width=w;c.height=h+90;
+    const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,w,c.height);
+    g.drawImage(img,0,0,w,h);g.fillStyle='#14313B';g.font='28px Tahoma';g.textAlign='center';g.direction=lang=='fa'?'rtl':'ltr';
+    g.fillText(t('pngcap'),w/2,h+55);
+    const a=document.createElement('a');a.download='concept-plan.png';a.href=c.toDataURL('image/png');a.click();
+  };
+  img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(new XMLSerializer().serializeToString(s));
+}
+function applyLang(){
+  document.documentElement.lang=lang;document.documentElement.dir=lang=='fa'?'rtl':'ltr';
+  document.title=t('title');$('err').textContent='';
+  document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=t(e.dataset.i18n));
+  document.querySelectorAll('[data-l]').forEach(b=>b.className=b.dataset.l==lang?'':'alt');
+  if(S.designs)renderAll();
+}
+document.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{lang=b.dataset.l;try{localStorage.setItem('lang',lang)}catch(e){}applyLang()});
+$('go').onclick=generate;
+applyLang();
+</script>
+</body>
+</html>

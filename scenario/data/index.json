@@ -1,14 +1,6 @@
 [
- {
-  "id": "airport",
-  "icon": "✈️",
-  "title": "Address & Airport",
-  "title_fa": "آدرس و فرودگاه"
- },
- {
-  "id": "hotel",
-  "icon": "🏨",
-  "title": "Hotel",
-  "title_fa": "هتل"
- }
+ {"id":"airport","icon":"✈️","title":"Address & Airport","title_fa":"آدرس و فرودگاه"},
+ {"id":"hotel","icon":"🏨","title":"Hotel","title_fa":"هتل"},
+ {"id":"restaurant","icon":"🍽️","title":"Restaurant","title_fa":"رستوران"},
+ {"id":"shop","icon":"🛍️","title":"Clothing Shop","title_fa":"فروشگاه"}
 ]

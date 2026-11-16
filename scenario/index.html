@@ -23,11 +23,15 @@ nav button.on{background:var(--a);color:#fff}
 <div id="bk" hidden>
 <nav id="nav"></nav><div class="scene" id="sc"></div>
 <div class="bar"><button id="back">← All scenarios</button><button id="pl">▶ Play chapter</button><button id="tg">فارسی ✓</button><button id="sp">Speed: 1×</button><button id="lg">Language: English</button></div>
-<main id="m"></main></div>
+<p class="msg" id="vm" hidden>Turkish voice is not installed on this device. Settings → Text-to-speech → Google → Install voice data → Turkish.<br>صدای ترکی روی این دستگاه نصب نیست.</p><main id="m"></main></div>
 <script>
 const $=i=>document.getElementById(i),TTS=!!window.speechSynthesis;
 let S,cur=0,rate=1,stop=false,LG="en",TR=null;
-function say(t){return new Promise(r=>{if(!TTS){r();return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=LG=="tr"?"tr-TR":"en-US";u.rate=rate;u.onend=u.onerror=r;speechSynthesis.speak(u)})}
+function pick(){if(!TTS)return null;const p=LG=="tr"?"tr":"en",V=speechSynthesis.getVoices().filter(v=>v.lang.toLowerCase().replace("_","-").startsWith(p));if(!V.length)return null;return V.find(v=>/google|enhanced|premium|natural/i.test(v.name))||V[0]}
+function noVoice(){return TTS&&LG=="tr"&&speechSynthesis.getVoices().length>0&&!pick()}
+function note(){$("vm").hidden=!noVoice()}
+if(TTS)speechSynthesis.onvoiceschanged=note;
+function say(t){return new Promise(r=>{if(!TTS||noVoice()){note();r();return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=LG=="tr"?"tr-TR":"en-US";const v=pick();if(v){u.voice=v;u.lang=v.lang}u.rate=LG=="tr"?rate*0.9:rate;u.onend=u.onerror=r;speechSynthesis.speak(u)})}
 function halt(){stop=true;if(TTS)speechSynthesis.cancel();$("pl").textContent="▶ Play chapter"}
 async function load(p){const r=await fetch(p);if(!r.ok)throw 0;return r.json()}
 async function route(){halt();const id=location.hash.slice(1);
@@ -38,7 +42,7 @@ S=await load(`data/${id}.json`);$("home").hidden=true;$("bk").hidden=false;
 $("h").textContent=`${S.icon} ${S.title}`;$("sub").textContent=`${S.chapters.reduce((a,c)=>a+c.lines.length,0)} sentences · tap any line to hear it`;
 $("nav").innerHTML="";S.chapters.forEach((c,i)=>{const b=document.createElement("button");b.textContent=`${c.icon} ${i+1}. ${c.title}`;b.onclick=()=>show(i);$("nav").appendChild(b)});show(0)}
 catch(e){$("home").hidden=false;$("bk").hidden=true;$("home").innerHTML='<p class="msg">Could not load data. Open this page from GitHub Pages (or a local server), not as a plain file.</p>'}}
-function show(c){halt();cur=c;const ch=S.chapters[c];
+function show(c){halt();note();cur=c;const ch=S.chapters[c];
 document.querySelectorAll("nav button").forEach((b,i)=>b.classList.toggle("on",i==c));
 $("sc").textContent=ch.icon;$("m").innerHTML="";
 const off=S.chapters.slice(0,c).reduce((a,x)=>a+x.lines.length,0),tr=LG=="tr"&&TR&&TR[S.id];

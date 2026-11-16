@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>سناریوآموز · ScenarioLingo</title>
+<style>
+:root{--bg:#faf7f2;--fg:#222;--card:#fff;--a:#2b6cb0;--b:#b7791f;--mut:#777}
+@media(prefers-color-scheme:dark){:root{--bg:#16181c;--fg:#eee;--card:#22252b;--a:#63b3ed;--b:#f6ad55;--mut:#999}}
+body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--fg)}
+header{padding:16px;text-align:center}h1{margin:0;font-size:20px}
+nav{display:flex;gap:8px;overflow-x:auto;padding:8px 12px;position:sticky;top:0;background:var(--bg)}
+button{white-space:nowrap;border:1px solid var(--mut);background:var(--card);color:var(--fg);border-radius:20px;padding:8px 14px;font-size:14px}
+nav button.on{background:var(--a);color:#fff}
+.scene{text-align:center;font-size:56px;padding:12px}
+.bar{display:flex;gap:8px;justify-content:center;padding-bottom:8px;flex-wrap:wrap}
+.l,.c{margin:8px 12px;padding:12px;border-radius:12px;background:var(--card);cursor:pointer;border-inline-start:5px solid var(--a)}
+.l.b{border-inline-start-color:var(--b)}.l.p{outline:2px solid var(--a)}
+.en{font-size:17px}.fa{direction:rtl;color:var(--mut);margin-top:4px;font-size:15px}
+.n{font-size:11px;color:var(--mut)}.hide .fa{display:none}.c{font-size:18px}
+.msg{text-align:center;color:#c53030;margin:12px}
+</style></head><body>
+<header><h1 id="h">سناریوآموز · ScenarioLingo</h1><div class="n" id="sub">Choose a scenario</div></header>
+<div id="home"></div>
+<div id="bk" hidden>
+<nav id="nav"></nav><div class="scene" id="sc"></div>
+<div class="bar"><button id="back">← All scenarios</button><button id="pl">▶ Play chapter</button><button id="tg">فارسی ✓</button><button id="sp">Speed: 1×</button></div>
+<main id="m"></main></div>
+<script>
+const $=i=>document.getElementById(i),TTS=!!window.speechSynthesis;
+let S,cur=0,rate=1,stop=false;
+function say(t){return new Promise(r=>{if(!TTS){r();return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=rate;u.onend=u.onerror=r;speechSynthesis.speak(u)})}
+function halt(){stop=true;if(TTS)speechSynthesis.cancel();$("pl").textContent="▶ Play chapter"}
+async function load(p){const r=await fetch(p);if(!r.ok)throw 0;return r.json()}
+async function route(){halt();const id=location.hash.slice(1);
+try{if(!id){$("bk").hidden=true;$("home").hidden=false;$("h").textContent="سناریوآموز · ScenarioLingo";$("sub").textContent="Choose a scenario";
+const L=await load("data/index.json");$("home").innerHTML="";
+L.forEach(x=>{const d=document.createElement("div");d.className="c";d.textContent=`${x.icon} ${x.title} — ${x.title_fa}`;d.onclick=()=>location.hash=x.id;$("home").appendChild(d)});return}
+S=await load(`data/${id}.json`);$("home").hidden=true;$("bk").hidden=false;
+$("h").textContent=`${S.icon} ${S.title}`;$("sub").textContent=`${S.chapters.reduce((a,c)=>a+c.lines.length,0)} sentences · tap any line to hear it`;
+$("nav").innerHTML="";S.chapters.forEach((c,i)=>{const b=document.createElement("button");b.textContent=`${c.icon} ${i+1}. ${c.title}`;b.onclick=()=>show(i);$("nav").appendChild(b)});show(0)}
+catch(e){$("home").hidden=false;$("bk").hidden=true;$("home").innerHTML='<p class="msg">Could not load data. Open this page from GitHub Pages (or a local server), not as a plain file.</p>'}}
+function show(c){halt();cur=c;const ch=S.chapters[c];
+document.querySelectorAll("nav button").forEach((b,i)=>b.classList.toggle("on",i==c));
+$("sc").textContent=ch.icon;$("m").innerHTML="";
+ch.lines.forEach((d,i)=>{const e=document.createElement("div");e.className="l"+(i%2?" b":"");
+e.innerHTML=`<div class="n">${i+1} · ${i%2?"B":"A"}</div><div class="en"></div><div class="fa"></div>`;
+e.children[1].textContent=d[0];e.children[2].textContent=d[1];
+e.onclick=()=>{stop=true;say(d[0])};$("m").appendChild(e)})}
+$("back").onclick=()=>{location.hash=""};
+$("pl").onclick=async()=>{if($("pl").textContent.startsWith("⏹")){halt();return}
+stop=false;$("pl").textContent="⏹ Stop";const L=[...$("m").children];
+for(const e of L){if(stop)break;L.forEach(x=>x.classList.remove("p"));e.classList.add("p");e.scrollIntoView({block:"center",behavior:"smooth"});await say(e.children[1].textContent)}
+L.forEach(x=>x.classList.remove("p"));if(!stop)$("pl").textContent="▶ Play chapter"};
+$("tg").onclick=()=>{const h=$("m").classList.toggle("hide");$("tg").textContent=h?"فارسی ✗":"فارسی ✓"};
+$("sp").onclick=()=>{rate=rate==1?0.7:rate==0.7?1.2:1;$("sp").textContent="Speed: "+rate+"×"};
+if(!TTS)$("sub").insertAdjacentHTML("afterend",'<p class="msg">Audio is not supported here. Open in Chrome or Safari.</p>');
+addEventListener("hashchange",route);route();
+</script></body></html>

@@ -1,0 +1,243 @@
+{
+ "id": "airport",
+ "icon": "✈️",
+ "title": "Address & Airport",
+ "title_fa": "آدرس و فرودگاه",
+ "chapters": [
+  {
+   "icon": "🗺️",
+   "title": "Asking for an Address",
+   "title_fa": "پرسیدن آدرس",
+   "lines": [
+    [
+     "Excuse me, could you help me, please?",
+     "ببخشید، لطفاً می‌توانید کمکم کنید؟"
+    ],
+    [
+     "Of course. What do you need?",
+     "حتماً. چه کمکی لازم دارید؟"
+    ],
+    [
+     "I'm looking for this address.",
+     "دنبال این آدرس می‌گردم."
+    ],
+    [
+     "Let me see. Which street is it?",
+     "ببینم. کدام خیابان است؟"
+    ],
+    [
+     "It's Park Street, number twelve.",
+     "خیابان پارک، پلاک دوازده."
+    ],
+    [
+     "I know it. It's not far from here.",
+     "بلدم. از اینجا دور نیست."
+    ],
+    [
+     "How far is it on foot?",
+     "پیاده چقدر راه است؟"
+    ],
+    [
+     "About ten minutes.",
+     "حدود ده دقیقه."
+    ],
+    [
+     "Should I go straight?",
+     "مستقیم بروم؟"
+    ],
+    [
+     "Yes, go straight for two blocks.",
+     "بله، دو بلوک مستقیم بروید."
+    ]
+   ]
+  },
+  {
+   "icon": "🚕",
+   "title": "Taxi to the Airport",
+   "title_fa": "تاکسی تا فرودگاه",
+   "lines": [
+    [
+     "Taxi! Are you available?",
+     "تاکسی! آزاد هستید؟"
+    ],
+    [
+     "Yes. Where to?",
+     "بله. کجا؟"
+    ],
+    [
+     "To the airport, please.",
+     "به فرودگاه، لطفاً."
+    ],
+    [
+     "Which terminal?",
+     "کدام ترمینال؟"
+    ],
+    [
+     "Terminal two, international flights.",
+     "ترمینال دو، پروازهای خارجی."
+    ],
+    [
+     "Sure. Please put your bags in the trunk.",
+     "حتماً. لطفاً چمدان‌ها را در صندوق عقب بگذارید."
+    ],
+    [
+     "How long does it take to get there?",
+     "رسیدن به آنجا چقدر طول می‌کشد؟"
+    ],
+    [
+     "About forty minutes without traffic.",
+     "بدون ترافیک حدود چهل دقیقه."
+    ],
+    [
+     "My flight leaves at six. Will we make it?",
+     "پروازم ساعت شش است. می‌رسیم؟"
+    ],
+    [
+     "Don't worry. We have plenty of time.",
+     "نگران نباشید. وقت کافی داریم."
+    ]
+   ]
+  },
+  {
+   "icon": "🧳",
+   "title": "Check-in",
+   "title_fa": "پذیرش پرواز",
+   "lines": [
+    [
+     "Good afternoon. Where is the check-in counter?",
+     "ظهر بخیر. باجه‌ی پذیرش پرواز کجاست؟"
+    ],
+    [
+     "Which airline are you flying with?",
+     "با کدام ایرلاین پرواز می‌کنید؟"
+    ],
+    [
+     "I'm flying with Sky Air to London.",
+     "با اسکای‌ایر به لندن می‌روم."
+    ],
+    [
+     "It's at counter fifteen, over there.",
+     "باجه‌ی پانزده است، آنجا."
+    ],
+    [
+     "May I see your passport and ticket?",
+     "پاسپورت و بلیتتان را ببینم؟"
+    ],
+    [
+     "Here you are.",
+     "بفرمایید."
+    ],
+    [
+     "Are you checking any bags?",
+     "چمدانی برای تحویل دارید؟"
+    ],
+    [
+     "Yes, one suitcase.",
+     "بله، یک چمدان."
+    ],
+    [
+     "Please place it on the scale.",
+     "لطفاً روی ترازو بگذارید."
+    ],
+    [
+     "Is it within the weight limit?",
+     "در حد مجاز وزن است؟"
+    ]
+   ]
+  },
+  {
+   "icon": "🛂",
+   "title": "Security & Gate",
+   "title_fa": "بازرسی و گیت",
+   "lines": [
+    [
+     "Please put your bag on the belt.",
+     "لطفاً کیف را روی نوار بگذارید."
+    ],
+    [
+     "Do I need to take out my laptop?",
+     "لازم است لپ‌تاپ را بیرون بیاورم؟"
+    ],
+    [
+     "Yes, and please remove your jacket.",
+     "بله، و لطفاً کتتان را دربیاورید."
+    ],
+    [
+     "Should I take off my shoes?",
+     "کفش‌هایم را درآورم؟"
+    ],
+    [
+     "No, that's not necessary.",
+     "نه، لازم نیست."
+    ],
+    [
+     "Please walk through the scanner.",
+     "لطفاً از اسکنر عبور کنید."
+    ],
+    [
+     "Do you have any liquids in your bag?",
+     "مایعاتی در کیفتان دارید؟"
+    ],
+    [
+     "Just a small bottle of water.",
+     "فقط یک بطری کوچک آب."
+    ],
+    [
+     "I'm sorry, you'll need to throw it away.",
+     "متأسفم، باید آن را دور بیندازید."
+    ],
+    [
+     "That's fine. Can I go now?",
+     "اشکالی ندارد. حالا می‌توانم بروم؟"
+    ]
+   ]
+  },
+  {
+   "icon": "🛬",
+   "title": "Arrival & Directions",
+   "title_fa": "رسیدن و پرسیدن مسیر",
+   "lines": [
+    [
+     "Excuse me, where is baggage claim?",
+     "ببخشید، محل تحویل چمدان کجاست؟"
+    ],
+    [
+     "Follow the signs to the lower level.",
+     "تابلوها را تا طبقه‌ی پایین دنبال کنید."
+    ],
+    [
+     "Which belt is for the London flight?",
+     "کدام نوار برای پرواز لندن است؟"
+    ],
+    [
+     "Belt number four.",
+     "نوار شماره‌ی چهار."
+    ],
+    [
+     "I can't find my suitcase.",
+     "چمدانم را پیدا نمی‌کنم."
+    ],
+    [
+     "Please go to the lost luggage office.",
+     "لطفاً به دفتر چمدان‌های گمشده بروید."
+    ],
+    [
+     "Found it! Where is the exit?",
+     "پیدایش کردم! خروجی کجاست؟"
+    ],
+    [
+     "Go through the green door.",
+     "از در سبز عبور کنید."
+    ],
+    [
+     "Where can I get a taxi?",
+     "از کجا تاکسی بگیرم؟"
+    ],
+    [
+     "The taxi stand is outside, to the right.",
+     "ایستگاه تاکسی بیرون، سمت راست است."
+    ]
+   ]
+  }
+ ]
+}

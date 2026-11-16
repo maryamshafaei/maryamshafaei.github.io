@@ -1,0 +1,243 @@
+{
+ "id": "hotel",
+ "icon": "🏨",
+ "title": "Hotel",
+ "title_fa": "هتل",
+ "chapters": [
+  {
+   "icon": "🏨",
+   "title": "Check-in",
+   "title_fa": "پذیرش",
+   "lines": [
+    [
+     "Good evening. Do you have a reservation?",
+     "عصر بخیر. رزرو دارید؟"
+    ],
+    [
+     "Yes, under the name Ahmadi.",
+     "بله، به نام احمدی."
+    ],
+    [
+     "Let me check. Two nights, a double room?",
+     "ببینم. دو شب، اتاق دونفره؟"
+    ],
+    [
+     "That's right. Is breakfast included?",
+     "درست است. صبحانه شامل است؟"
+    ],
+    [
+     "Yes, breakfast is included.",
+     "بله، صبحانه شامل است."
+    ],
+    [
+     "May I see your passport, please?",
+     "پاسپورتتان را ببینم، لطفاً؟"
+    ],
+    [
+     "Here it is.",
+     "بفرمایید."
+    ],
+    [
+     "Please fill out this form.",
+     "لطفاً این فرم را پر کنید."
+    ],
+    [
+     "Could I pay by credit card?",
+     "می‌توانم با کارت اعتباری پرداخت کنم؟"
+    ],
+    [
+     "Of course. Here is your key card.",
+     "حتماً. این هم کارت اتاق شما."
+    ]
+   ]
+  },
+  {
+   "icon": "🛏️",
+   "title": "Your Room",
+   "title_fa": "اتاق شما",
+   "lines": [
+    [
+     "Your room is on the fifth floor.",
+     "اتاقتان در طبقه‌ی پنجم است."
+    ],
+    [
+     "Where is the elevator?",
+     "آسانسور کجاست؟"
+    ],
+    [
+     "It's down the hall, on your right.",
+     "ته راهرو، سمت راست است."
+    ],
+    [
+     "Does the room have a view?",
+     "اتاق منظره دارد؟"
+    ],
+    [
+     "Yes, it faces the garden.",
+     "بله، رو به باغ است."
+    ],
+    [
+     "How do I turn on the air conditioner?",
+     "کولر را چطور روشن کنم؟"
+    ],
+    [
+     "Use the remote on the table.",
+     "از کنترل روی میز استفاده کنید."
+    ],
+    [
+     "Is there a safe in the room?",
+     "در اتاق گاوصندوق هست؟"
+    ],
+    [
+     "Yes, it's inside the closet.",
+     "بله، داخل کمد است."
+    ],
+    [
+     "Is there a hair dryer in the bathroom?",
+     "در حمام سشوار هست؟"
+    ]
+   ]
+  },
+  {
+   "icon": "🛎️",
+   "title": "Requests & Problems",
+   "title_fa": "درخواست‌ها و مشکلات",
+   "lines": [
+    [
+     "Hello, this is room 512. I need extra towels.",
+     "سلام، اتاق ۵۱۲ هستم. حوله‌ی اضافه می‌خواهم."
+    ],
+    [
+     "Certainly. We'll send them right away.",
+     "حتماً. همین الان می‌فرستیم."
+    ],
+    [
+     "The air conditioner isn't working.",
+     "کولر کار نمی‌کند."
+    ],
+    [
+     "I'm sorry. I'll send someone to fix it.",
+     "متأسفم. یک نفر را برای تعمیر می‌فرستم."
+    ],
+    [
+     "There is no hot water.",
+     "آب گرم نیست."
+    ],
+    [
+     "Could you change my room, please?",
+     "می‌توانید اتاقم را عوض کنید؟"
+    ],
+    [
+     "The room next door is too noisy.",
+     "اتاق کناری خیلی پرسروصداست."
+    ],
+    [
+     "Let me see what is available.",
+     "ببینم چه اتاقی خالی است."
+    ],
+    [
+     "Could I have a quieter room?",
+     "می‌توانم اتاق ساکت‌تری داشته باشم؟"
+    ],
+    [
+     "Yes, we can move you to room 604.",
+     "بله، می‌توانیم شما را به اتاق ۶۰۴ ببریم."
+    ]
+   ]
+  },
+  {
+   "icon": "🍳",
+   "title": "Hotel Services",
+   "title_fa": "خدمات هتل",
+   "lines": [
+    [
+     "What time is breakfast served?",
+     "صبحانه چه ساعتی سرو می‌شود؟"
+    ],
+    [
+     "From seven to ten in the restaurant.",
+     "از هفت تا ده در رستوران."
+    ],
+    [
+     "What is the Wi-Fi password?",
+     "رمز وای‌فای چیست؟"
+    ],
+    [
+     "It's on your key card sleeve.",
+     "روی پاکت کارت اتاق نوشته شده."
+    ],
+    [
+     "Is there a gym or a pool?",
+     "باشگاه یا استخر دارید؟"
+    ],
+    [
+     "Yes, both are on the second floor.",
+     "بله، هر دو در طبقه‌ی دوم هستند."
+    ],
+    [
+     "Can you recommend a good restaurant nearby?",
+     "رستوران خوبی نزدیک اینجا پیشنهاد می‌کنید؟"
+    ],
+    [
+     "There's a nice one around the corner.",
+     "یک رستوران خوب همین نزدیکی است."
+    ],
+    [
+     "Could you call a taxi for me?",
+     "می‌توانید برایم تاکسی بگیرید؟"
+    ],
+    [
+     "Of course. It will arrive in ten minutes.",
+     "حتماً. ده دقیقه‌ی دیگر می‌رسد."
+    ]
+   ]
+  },
+  {
+   "icon": "🧾",
+   "title": "Check-out",
+   "title_fa": "تسویه",
+   "lines": [
+    [
+     "I'd like to check out, please.",
+     "می‌خواهم تسویه کنم، لطفاً."
+    ],
+    [
+     "What is your room number?",
+     "شماره‌ی اتاقتان چند است؟"
+    ],
+    [
+     "Room 604.",
+     "اتاق ۶۰۴."
+    ],
+    [
+     "Did you use anything from the minibar?",
+     "از یخچال اتاق چیزی استفاده کردید؟"
+    ],
+    [
+     "Yes, just a bottle of water.",
+     "بله، فقط یک بطری آب."
+    ],
+    [
+     "Here is your bill.",
+     "این صورتحساب شماست."
+    ],
+    [
+     "I think there is a mistake on the bill.",
+     "فکر می‌کنم صورتحساب اشتباه دارد."
+    ],
+    [
+     "I'm sorry. Let me correct it.",
+     "متأسفم. اصلاحش می‌کنم."
+    ],
+    [
+     "Could you keep my luggage until the afternoon?",
+     "می‌توانید چمدانم را تا بعدازظهر نگه دارید؟"
+    ],
+    [
+     "Thank you for staying with us. Have a safe trip!",
+     "ممنون که مهمان ما بودید. سفر خوبی داشته باشید!"
+    ]
+   ]
+  }
+ ]
+}

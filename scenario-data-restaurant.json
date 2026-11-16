@@ -1,0 +1,243 @@
+{
+ "id": "restaurant",
+ "icon": "🍽️",
+ "title": "Restaurant",
+ "title_fa": "رستوران",
+ "chapters": [
+  {
+   "icon": "🪑",
+   "title": "Arriving & Seating",
+   "title_fa": "ورود و نشستن",
+   "lines": [
+    [
+     "Good evening. Do you have a table for two?",
+     "عصر بخیر. میز دونفره دارید؟"
+    ],
+    [
+     "Do you have a reservation?",
+     "رزرو دارید؟"
+    ],
+    [
+     "No, we don't. Is there a table available?",
+     "نه، نداریم. میز خالی هست؟"
+    ],
+    [
+     "Yes. Please follow me.",
+     "بله. لطفاً دنبال من بیایید."
+    ],
+    [
+     "Would you like to sit inside or outside?",
+     "می‌خواهید داخل بنشینید یا بیرون؟"
+    ],
+    [
+     "Outside, please. It's a nice evening.",
+     "بیرون، لطفاً. شب خوبی است."
+    ],
+    [
+     "Here is your table.",
+     "این میز شماست."
+    ],
+    [
+     "Could we have a table by the window?",
+     "می‌توانیم میز کنار پنجره داشته باشیم؟"
+    ],
+    [
+     "Of course. Here are the menus.",
+     "حتماً. این هم منوها."
+    ],
+    [
+     "Thank you. We'll need a few minutes.",
+     "ممنون. چند دقیقه وقت لازم داریم."
+    ]
+   ]
+  },
+  {
+   "icon": "📋",
+   "title": "Ordering",
+   "title_fa": "سفارش دادن",
+   "lines": [
+    [
+     "Are you ready to order?",
+     "آماده‌ی سفارش هستید؟"
+    ],
+    [
+     "What do you recommend?",
+     "چه چیزی پیشنهاد می‌کنید؟"
+    ],
+    [
+     "The grilled salmon is very popular.",
+     "ماهی سالمون کبابی خیلی محبوب است."
+    ],
+    [
+     "I'll have the salmon, please.",
+     "من سالمون می‌خورم، لطفاً."
+    ],
+    [
+     "And for you, sir?",
+     "و برای شما، آقا؟"
+    ],
+    [
+     "I'd like the chicken with rice.",
+     "مرغ با برنج می‌خواهم."
+    ],
+    [
+     "Does it come with a salad?",
+     "با سالاد سرو می‌شود؟"
+    ],
+    [
+     "Yes, it comes with a side salad.",
+     "بله، با یک سالاد کنار سرو می‌شود."
+    ],
+    [
+     "I'm allergic to nuts. Does this dish have any?",
+     "به آجیل حساسیت دارم. این غذا آجیل دارد؟"
+    ],
+    [
+     "No, it doesn't. It's safe for you.",
+     "نه، ندارد. برای شما مشکلی ندارد."
+    ]
+   ]
+  },
+  {
+   "icon": "🥤",
+   "title": "Drinks & Eating",
+   "title_fa": "نوشیدنی و غذا",
+   "lines": [
+    [
+     "What would you like to drink?",
+     "چه نوشیدنی می‌خواهید؟"
+    ],
+    [
+     "Just water for me, please.",
+     "برای من فقط آب، لطفاً."
+    ],
+    [
+     "I'll have a glass of orange juice.",
+     "یک لیوان آب‌پرتقال می‌خورم."
+    ],
+    [
+     "Still or sparkling water?",
+     "آب ساده یا گازدار؟"
+    ],
+    [
+     "Still, please.",
+     "ساده، لطفاً."
+    ],
+    [
+     "Enjoy your meal.",
+     "نوش جان."
+    ],
+    [
+     "Could I have some more bread?",
+     "می‌توانم کمی نان بیشتر داشته باشم؟"
+    ],
+    [
+     "Excuse me, could we have another fork?",
+     "ببخشید، می‌توانیم یک چنگال دیگر داشته باشیم؟"
+    ],
+    [
+     "Is everything all right?",
+     "همه‌چیز خوب است؟"
+    ],
+    [
+     "Yes, the food is delicious.",
+     "بله، غذا خیلی خوشمزه است."
+    ]
+   ]
+  },
+  {
+   "icon": "⚠️",
+   "title": "Problems",
+   "title_fa": "مشکلات",
+   "lines": [
+    [
+     "Excuse me, this isn't what I ordered.",
+     "ببخشید، این چیزی نیست که سفارش دادم."
+    ],
+    [
+     "I'm very sorry. I'll change it right away.",
+     "خیلی متأسفم. همین الان عوضش می‌کنم."
+    ],
+    [
+     "My soup is cold.",
+     "سوپم سرد است."
+    ],
+    [
+     "I'll bring you a hot one.",
+     "یکی داغ برایتان می‌آورم."
+    ],
+    [
+     "The meat is overcooked.",
+     "گوشت زیادی پخته شده."
+    ],
+    [
+     "We've been waiting for a long time.",
+     "مدت زیادی است منتظریم."
+    ],
+    [
+     "I apologize for the delay.",
+     "بابت تأخیر عذرخواهی می‌کنم."
+    ],
+    [
+     "Could you pack the leftovers for me?",
+     "می‌توانید باقی‌مانده‌ی غذا را برایم بسته‌بندی کنید؟"
+    ],
+    [
+     "Certainly. I'll get a box.",
+     "حتماً. یک ظرف می‌آورم."
+    ],
+    [
+     "Could we see the dessert menu?",
+     "می‌توانیم منوی دسر را ببینیم؟"
+    ]
+   ]
+  },
+  {
+   "icon": "💳",
+   "title": "Paying",
+   "title_fa": "پرداخت",
+   "lines": [
+    [
+     "Could we have the bill, please?",
+     "می‌توانیم صورتحساب را بگیریم، لطفاً؟"
+    ],
+    [
+     "Here you are.",
+     "بفرمایید."
+    ],
+    [
+     "Is the service charge included?",
+     "هزینه‌ی سرویس شامل است؟"
+    ],
+    [
+     "Yes, it's already included.",
+     "بله، قبلاً حساب شده."
+    ],
+    [
+     "Can we pay separately?",
+     "می‌توانیم جداگانه پرداخت کنیم؟"
+    ],
+    [
+     "Of course. Cash or card?",
+     "حتماً. نقد یا کارت؟"
+    ],
+    [
+     "Card, please.",
+     "کارت، لطفاً."
+    ],
+    [
+     "I think there's a mistake on the bill.",
+     "فکر می‌کنم صورتحساب اشتباه دارد."
+    ],
+    [
+     "Keep the change.",
+     "بقیه‌اش مال شما."
+    ],
+    [
+     "Thank you for coming. Have a nice evening!",
+     "ممنون که آمدید. شب خوبی داشته باشید!"
+    ]
+   ]
+  }
+ ]
+}

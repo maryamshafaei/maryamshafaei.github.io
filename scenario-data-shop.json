@@ -1,0 +1,243 @@
+{
+ "id": "shop",
+ "icon": "🛍️",
+ "title": "Clothing Shop",
+ "title_fa": "فروشگاه",
+ "chapters": [
+  {
+   "icon": "👋",
+   "title": "Entering",
+   "title_fa": "ورود به فروشگاه",
+   "lines": [
+    [
+     "Hello. Can I help you?",
+     "سلام. کمکی از دستم برمی‌آید؟"
+    ],
+    [
+     "I'm just looking, thanks.",
+     "فقط نگاه می‌کنم، ممنون."
+    ],
+    [
+     "Let me know if you need anything.",
+     "اگر چیزی لازم داشتید خبر بدهید."
+    ],
+    [
+     "Actually, I'm looking for a jacket.",
+     "راستش دنبال یک ژاکت می‌گردم."
+    ],
+    [
+     "What kind of jacket?",
+     "چه نوع ژاکتی؟"
+    ],
+    [
+     "Something warm for the winter.",
+     "چیزی گرم برای زمستان."
+    ],
+    [
+     "They're over there, on the left.",
+     "آنجا هستند، سمت چپ."
+    ],
+    [
+     "Do you have this in a different color?",
+     "این را در رنگ دیگری دارید؟"
+    ],
+    [
+     "We have it in black and blue.",
+     "مشکی و آبی داریم."
+    ],
+    [
+     "Can I see the blue one?",
+     "می‌توانم آبی را ببینم؟"
+    ]
+   ]
+  },
+  {
+   "icon": "📏",
+   "title": "Size & Fitting",
+   "title_fa": "سایز و پرو",
+   "lines": [
+    [
+     "What size are you?",
+     "سایزتان چند است؟"
+    ],
+    [
+     "I'm a medium.",
+     "من مدیوم هستم."
+    ],
+    [
+     "Do you have this in a larger size?",
+     "این را در سایز بزرگ‌تر دارید؟"
+    ],
+    [
+     "I'll check in the back.",
+     "در انبار نگاه می‌کنم."
+    ],
+    [
+     "Can I try it on?",
+     "می‌توانم امتحانش کنم؟"
+    ],
+    [
+     "Yes, the fitting rooms are at the back.",
+     "بله، اتاق پرو ته مغازه است."
+    ],
+    [
+     "How does it fit?",
+     "اندازه‌تان هست؟"
+    ],
+    [
+     "It's a little tight.",
+     "کمی تنگ است."
+    ],
+    [
+     "It's too long for me.",
+     "برایم زیادی بلند است."
+    ],
+    [
+     "This one fits perfectly.",
+     "این یکی کاملاً اندازه است."
+    ]
+   ]
+  },
+  {
+   "icon": "💰",
+   "title": "Price",
+   "title_fa": "قیمت",
+   "lines": [
+    [
+     "How much is this?",
+     "این چند است؟"
+    ],
+    [
+     "It's eighty dollars.",
+     "هشتاد دلار است."
+    ],
+    [
+     "That's a bit expensive.",
+     "کمی گران است."
+    ],
+    [
+     "Is there a discount?",
+     "تخفیف دارد؟"
+    ],
+    [
+     "It's twenty percent off today.",
+     "امروز بیست درصد تخفیف دارد."
+    ],
+    [
+     "Do you have anything cheaper?",
+     "چیزی ارزان‌تر دارید؟"
+    ],
+    [
+     "This one is only fifty dollars.",
+     "این یکی فقط پنجاه دلار است."
+    ],
+    [
+     "Is the price on the tag final?",
+     "قیمت روی برچسب نهایی است؟"
+    ],
+    [
+     "Yes, tax is included.",
+     "بله، مالیات شامل است."
+    ],
+    [
+     "I'll take it.",
+     "همین را می‌خرم."
+    ]
+   ]
+  },
+  {
+   "icon": "🧾",
+   "title": "Paying",
+   "title_fa": "پرداخت",
+   "lines": [
+    [
+     "Will that be cash or card?",
+     "نقد یا کارت؟"
+    ],
+    [
+     "Can I pay by card?",
+     "می‌توانم با کارت پرداخت کنم؟"
+    ],
+    [
+     "Please enter your PIN.",
+     "لطفاً رمز کارت را وارد کنید."
+    ],
+    [
+     "Do you need a bag?",
+     "کیسه می‌خواهید؟"
+    ],
+    [
+     "Yes, please.",
+     "بله، لطفاً."
+    ],
+    [
+     "Here is your receipt.",
+     "این هم رسیدتان."
+    ],
+    [
+     "Could you gift wrap it?",
+     "می‌توانید کادو کنید؟"
+    ],
+    [
+     "Of course. It will take a few minutes.",
+     "حتماً. چند دقیقه طول می‌کشد."
+    ],
+    [
+     "Do you accept foreign cards?",
+     "کارت خارجی قبول می‌کنید؟"
+    ],
+    [
+     "Yes, we accept all major cards.",
+     "بله، همه‌ی کارت‌های معتبر را قبول می‌کنیم."
+    ]
+   ]
+  },
+  {
+   "icon": "🔄",
+   "title": "Returns",
+   "title_fa": "مرجوع کردن",
+   "lines": [
+    [
+     "I'd like to return this, please.",
+     "می‌خواهم این را مرجوع کنم، لطفاً."
+    ],
+    [
+     "What seems to be the problem?",
+     "مشکل چیست؟"
+    ],
+    [
+     "It doesn't fit.",
+     "اندازه نیست."
+    ],
+    [
+     "Do you have the receipt?",
+     "رسید دارید؟"
+    ],
+    [
+     "Yes, here it is.",
+     "بله، بفرمایید."
+    ],
+    [
+     "You can exchange it within thirty days.",
+     "تا سی روز می‌توانید تعویضش کنید."
+    ],
+    [
+     "Can I get a refund instead?",
+     "می‌توانم به‌جایش پولم را پس بگیرم؟"
+    ],
+    [
+     "Yes, to the same card.",
+     "بله، به همان کارت."
+    ],
+    [
+     "The zipper is broken.",
+     "زیپش خراب است."
+    ],
+    [
+     "I'm sorry. Let me find you another one.",
+     "متأسفم. یکی دیگر برایتان پیدا می‌کنم."
+    ]
+   ]
+  }
+ ]
+}

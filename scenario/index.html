@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>سناریوآموز · ScenarioLingo</title>
+<title>ScenarioLingo</title>
 <style>
 :root{--bg:#faf7f2;--fg:#222;--card:#fff;--a:#2b6cb0;--b:#b7791f;--mut:#777}
 @media(prefers-color-scheme:dark){:root{--bg:#16181c;--fg:#eee;--card:#22252b;--a:#63b3ed;--b:#f6ad55;--mut:#999}}
@@ -14,51 +14,53 @@ nav button.on{background:var(--a);color:#fff}
 .bar{display:flex;gap:8px;justify-content:center;padding-bottom:8px;flex-wrap:wrap}
 .l,.c{margin:8px 12px;padding:12px;border-radius:12px;background:var(--card);cursor:pointer;border-inline-start:5px solid var(--a)}
 .l.b{border-inline-start-color:var(--b)}.l.p{outline:2px solid var(--a)}
-.en{font-size:17px}.fa{direction:rtl;color:var(--mut);margin-top:4px;font-size:15px}
-.n{font-size:11px;color:var(--mut)}.hide .fa{display:none}.c{font-size:18px}
+.en{font-size:17px}.n{font-size:11px;color:var(--mut);margin-top:4px}.c{font-size:18px}
 .msg{text-align:center;color:#c53030;margin:12px}
 </style></head><body>
-<header><h1 id="h">سناریوآموز · ScenarioLingo</h1><div class="n" id="sub">Choose a scenario</div></header>
+<header><h1 id="h">ScenarioLingo</h1><div class="n" id="sub">Choose a scenario</div></header>
 <div id="home"></div>
 <div id="bk" hidden>
 <nav id="nav"></nav><div class="scene" id="sc"></div>
-<div class="bar"><button id="back">← All scenarios</button><button id="pl">▶ Play chapter</button><button id="tg">فارسی ✓</button><button id="sp">Speed: 1×</button><button id="lg">Language: English</button></div>
-<p class="msg" id="vm" hidden>Turkish voice is not installed on this device. Settings → Text-to-speech → Google → Install voice data → Turkish.<br>صدای ترکی روی این دستگاه نصب نیست.</p><main id="m"></main></div>
+<div class="bar"><button id="back">← All scenarios</button><button id="pl">▶ Play chapter</button><button id="sp">Speed: 1×</button><button id="lg">Language: English</button></div>
+<p class="msg" id="vm" hidden></p>
+<main id="m"></main></div>
 <script>
 const $=i=>document.getElementById(i),TTS=!!window.speechSynthesis;
-let S,cur=0,rate=1,stop=false,LG="en",TR=null;
-function pick(){if(!TTS)return null;const p=LG=="tr"?"tr":"en",V=speechSynthesis.getVoices().filter(v=>v.lang.toLowerCase().replace("_","-").startsWith(p));if(!V.length)return null;return V.find(v=>/google|enhanced|premium|natural/i.test(v.name))||V[0]}
-function noVoice(){return TTS&&LG=="tr"&&speechSynthesis.getVoices().length>0&&!pick()}
-function note(){$("vm").hidden=!noVoice()}
+const LG=[["en","English","en-US"],["tr","Türkçe","tr-TR"],["es","Español","es-ES"]],PU={tr:"data/tr.json",es:"data/es.txt"};
+let S,cur=0,rate=1,stop=false,li=0,PK={};
+function pick(){if(!TTS)return null;const p=LG[li][2].slice(0,2),V=speechSynthesis.getVoices().filter(v=>v.lang.toLowerCase().replace("_","-").startsWith(p));if(!V.length)return null;return V.find(v=>/google|enhanced|premium|natural/i.test(v.name))||V[0]}
+function noVoice(){return TTS&&li>0&&speechSynthesis.getVoices().length>0&&!pick()}
+function note(){const m=$("vm"),n=LG[li][1];m.hidden=!noVoice();m.textContent=n+" voice is not installed on this device. Settings → Text-to-speech → Google → Install voice data → "+n+"."}
 if(TTS)speechSynthesis.onvoiceschanged=note;
-function say(t){return new Promise(r=>{if(!TTS||noVoice()){note();r();return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=LG=="tr"?"tr-TR":"en-US";const v=pick();if(v){u.voice=v;u.lang=v.lang}u.rate=LG=="tr"?rate*0.9:rate;u.onend=u.onerror=r;speechSynthesis.speak(u)})}
+function say(t){return new Promise(r=>{if(!TTS||noVoice()){note();r();return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=LG[li][2];const v=pick();if(v){u.voice=v;u.lang=v.lang}u.rate=li?rate*0.9:rate;u.onend=u.onerror=r;speechSynthesis.speak(u)})}
 function halt(){stop=true;if(TTS)speechSynthesis.cancel();$("pl").textContent="▶ Play chapter"}
-async function load(p){const r=await fetch(p);if(!r.ok)throw 0;return r.json()}
+async function load(p){const r=await fetch(p);if(!r.ok)throw 0;return JSON.parse(await r.text())}
 async function route(){halt();const id=location.hash.slice(1);
-try{if(!id){$("bk").hidden=true;$("home").hidden=false;$("h").textContent="سناریوآموز · ScenarioLingo";$("sub").textContent="Choose a scenario";
+try{if(!id){$("bk").hidden=true;$("home").hidden=false;$("h").textContent="ScenarioLingo";$("sub").textContent="Choose a scenario";
 const L=await load("data/index.json");$("home").innerHTML="";
-L.forEach(x=>{const d=document.createElement("div");d.className="c";d.textContent=`${x.icon} ${x.title} — ${x.title_fa}`;d.onclick=()=>location.hash=x.id;$("home").appendChild(d)});return}
-S=await load(`data/${id}.json`);$("home").hidden=true;$("bk").hidden=false;
-$("h").textContent=`${S.icon} ${S.title}`;$("sub").textContent=`${S.chapters.reduce((a,c)=>a+c.lines.length,0)} sentences · tap any line to hear it`;
-$("nav").innerHTML="";S.chapters.forEach((c,i)=>{const b=document.createElement("button");b.textContent=`${c.icon} ${i+1}. ${c.title}`;b.onclick=()=>show(i);$("nav").appendChild(b)});show(0)}
+L.forEach(x=>{const d=document.createElement("div");d.className="c";d.textContent=x.icon+" "+x.title;d.onclick=()=>location.hash=x.id;$("home").appendChild(d)});return}
+S=await load("data/"+id+".json");$("home").hidden=true;$("bk").hidden=false;
+$("h").textContent=S.icon+" "+S.title;$("sub").textContent=S.chapters.reduce((a,c)=>a+c.lines.length,0)+" sentences · tap any line to hear it";
+$("nav").innerHTML="";S.chapters.forEach((c,i)=>{const b=document.createElement("button");b.textContent=c.icon+" "+(i+1)+". "+c.title;b.onclick=()=>show(i);$("nav").appendChild(b)});show(0)}
 catch(e){$("home").hidden=false;$("bk").hidden=true;$("home").innerHTML='<p class="msg">Could not load data. Open this page from GitHub Pages (or a local server), not as a plain file.</p>'}}
-function show(c){halt();note();cur=c;const ch=S.chapters[c];
+function show(c){halt();note();cur=c;const ch=S.chapters[c],P=PK[LG[li][0]]&&PK[LG[li][0]][S.id];
 document.querySelectorAll("nav button").forEach((b,i)=>b.classList.toggle("on",i==c));
 $("sc").textContent=ch.icon;$("m").innerHTML="";
-const off=S.chapters.slice(0,c).reduce((a,x)=>a+x.lines.length,0),tr=LG=="tr"&&TR&&TR[S.id];
+const off=S.chapters.slice(0,c).reduce((a,x)=>a+x.lines.length,0);
 ch.lines.forEach((d,i)=>{const e=document.createElement("div");e.className="l"+(i%2?" b":"");
-const t=tr?TR[S.id][off+i]:d[0];
-e.innerHTML=`<div class="n">${i+1} · ${i%2?"B":"A"}</div><div class="en"></div><div class="fa"></div>`;
-e.children[1].textContent=t;e.children[2].textContent=d[1];
-if(tr){const g=document.createElement("div");g.className="n";g.textContent=d[0];e.appendChild(g)}
+const t=P?P[off+i]:d[0];
+e.innerHTML='<div class="n">'+(i+1)+" · "+(i%2?"B":"A")+'</div><div class="en"></div>';
+e.children[1].textContent=t;
+if(P){const g=document.createElement("div");g.className="n";g.textContent=d[0];e.appendChild(g)}
 e.onclick=()=>{stop=true;say(t)};$("m").appendChild(e)})}
 $("back").onclick=()=>{location.hash=""};
 $("pl").onclick=async()=>{if($("pl").textContent.startsWith("⏹")){halt();return}
 stop=false;$("pl").textContent="⏹ Stop";const L=[...$("m").children];
 for(const e of L){if(stop)break;L.forEach(x=>x.classList.remove("p"));e.classList.add("p");e.scrollIntoView({block:"center",behavior:"smooth"});await say(e.children[1].textContent)}
 L.forEach(x=>x.classList.remove("p"));if(!stop)$("pl").textContent="▶ Play chapter"};
-$("tg").onclick=()=>{const h=$("m").classList.toggle("hide");$("tg").textContent=h?"فارسی ✗":"فارسی ✓"};
-$("lg").onclick=async()=>{if(LG=="en"){if(!TR){try{TR=await load("data/tr.json")}catch(e){alert("Turkish data not found");return}}LG="tr";$("lg").textContent="Language: Türkçe"}else{LG="en";$("lg").textContent="Language: English"}halt();if(S)show(cur)};
+$("lg").onclick=async()=>{let nx=(li+1)%LG.length;const c=LG[nx][0];
+if(nx&&!PK[c]){try{PK[c]=await load(PU[c])}catch(e){alert(LG[nx][1]+" data not found");nx=0}}
+li=nx;$("lg").textContent="Language: "+LG[li][1];halt();if(S)show(cur)};
 $("sp").onclick=()=>{rate=rate==1?0.7:rate==0.7?1.2:1;$("sp").textContent="Speed: "+rate+"×"};
 if(!TTS)$("sub").insertAdjacentHTML("afterend",'<p class="msg">Audio is not supported here. Open in Chrome or Safari.</p>');
 addEventListener("hashchange",route);route();

@@ -26,7 +26,7 @@ nav button.on{background:var(--a);color:#fff}
 <main id="m"></main></div>
 <script>
 const $=i=>document.getElementById(i),TTS=!!window.speechSynthesis;
-const LG=[["en","English","en-US"],["tr","Türkçe","tr-TR"],["es","Español","es-ES"]],PU={tr:"data/tr.json",es:"data/es.txt"};
+const LG=[["en","English","en-US"],["tr","Türkçe","tr-TR"]];
 let S,cur=0,rate=1,stop=false,li=0,PK={};
 function pick(){if(!TTS)return null;const p=LG[li][2].slice(0,2),V=speechSynthesis.getVoices().filter(v=>v.lang.toLowerCase().replace("_","-").startsWith(p));if(!V.length)return null;return V.find(v=>/google|enhanced|premium|natural/i.test(v.name))||V[0]}
 function noVoice(){return TTS&&li>0&&speechSynthesis.getVoices().length>0&&!pick()}

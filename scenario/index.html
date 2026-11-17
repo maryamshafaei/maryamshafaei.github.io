@@ -35,11 +35,12 @@ if(TTS)speechSynthesis.onvoiceschanged=note;
 function say(t){return new Promise(r=>{if(!TTS||noVoice()){note();r();return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=LG[li][2];const v=pick();if(v){u.voice=v;u.lang=v.lang}u.rate=li?rate*0.9:rate;u.onend=u.onerror=r;speechSynthesis.speak(u)})}
 function halt(){stop=true;if(TTS)speechSynthesis.cancel();$("pl").textContent="▶ Play chapter"}
 async function load(p){const r=await fetch(p);if(!r.ok)throw 0;return JSON.parse(await r.text())}
+async function loadAny(n){try{return await load("data/"+n+".txt")}catch(e){return await load("data/"+n+".json")}}
 async function route(){halt();const id=location.hash.slice(1);
 try{if(!id){$("bk").hidden=true;$("home").hidden=false;$("h").textContent="ScenarioLingo";$("sub").textContent="Choose a scenario";
-const L=await load("data/index.json");$("home").innerHTML="";
+const L=await loadAny("index");$("home").innerHTML="";
 L.forEach(x=>{const d=document.createElement("div");d.className="c";d.textContent=x.icon+" "+x.title;d.onclick=()=>location.hash=x.id;$("home").appendChild(d)});return}
-S=await load("data/"+id+".json");$("home").hidden=true;$("bk").hidden=false;
+S=await loadAny(id);$("home").hidden=true;$("bk").hidden=false;
 $("h").textContent=S.icon+" "+S.title;$("sub").textContent=S.chapters.reduce((a,c)=>a+c.lines.length,0)+" sentences · tap any line to hear it";
 $("nav").innerHTML="";S.chapters.forEach((c,i)=>{const b=document.createElement("button");b.textContent=c.icon+" "+(i+1)+". "+c.title;b.onclick=()=>show(i);$("nav").appendChild(b)});show(0)}
 catch(e){$("home").hidden=false;$("bk").hidden=true;$("home").innerHTML='<p class="msg">Could not load data. Open this page from GitHub Pages (or a local server), not as a plain file.</p>'}}
@@ -59,7 +60,7 @@ stop=false;$("pl").textContent="⏹ Stop";const L=[...$("m").children];
 for(const e of L){if(stop)break;L.forEach(x=>x.classList.remove("p"));e.classList.add("p");e.scrollIntoView({block:"center",behavior:"smooth"});await say(e.children[1].textContent)}
 L.forEach(x=>x.classList.remove("p"));if(!stop)$("pl").textContent="▶ Play chapter"};
 $("lg").onclick=async()=>{let nx=(li+1)%LG.length;const c=LG[nx][0];
-if(nx&&!PK[c]){try{PK[c]=await load(PU[c])}catch(e){alert(LG[nx][1]+" data not found");nx=0}}
+if(nx&&!PK[c]){try{PK[c]=await loadAny(c)}catch(e){alert(LG[nx][1]+" data not found");nx=0}}
 li=nx;$("lg").textContent="Language: "+LG[li][1];halt();if(S)show(cur)};
 $("sp").onclick=()=>{rate=rate==1?0.7:rate==0.7?1.2:1;$("sp").textContent="Speed: "+rate+"×"};
 if(!TTS)$("sub").insertAdjacentHTML("afterend",'<p class="msg">Audio is not supported here. Open in Chrome or Safari.</p>');

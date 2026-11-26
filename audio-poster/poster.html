@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>پوستر صوتی واژگان</title>
+<style>
+:root{--bg:#edf3f5;--card:#fff;--ink:#203344;--mut:#536574;--navy:#184352;--acc:#fbbf24;--line:#cbd9df;--act:#e5f8f4;--teal:#0d9488;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1c24;--card:#182a35;--ink:#e6eef2;--mut:#9db3bf;--navy:#2b6277;--line:#2c4452;--act:#12403c}}
+*{box-sizing:border-box}html{scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif;padding-bottom:140px}
+.en{font-family:Arial,sans-serif;direction:ltr;text-align:left}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--navy);color:#fff;padding:12px 16px;z-index:5;display:flex;justify-content:space-between;align-items:center}
+header h1{font-size:17px;margin:0}header a{color:#fff;text-decoration:none;font-size:14px}
+main{max-width:900px;margin:auto;padding:12px}
+button,select{font:inherit;cursor:pointer}button{border:0;border-radius:10px;padding:9px 12px;font-weight:bold;background:var(--navy);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(min-width:600px){.grid{grid-template-columns:repeat(6,1fr)}}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:4px;min-height:84px;justify-content:center}
+.tile b{font-size:18px;color:var(--teal)}.tile span{font-size:13px;font-weight:bold}.tile small{color:var(--mut)}
+.tile.off{opacity:.45}.tile.off span{font-weight:normal;font-size:12px}
+h2{margin:6px 0 2px;font-size:30px}.ipa{color:var(--mut);font-size:18px}
+.meta{display:inline-block;background:var(--navy);color:#fff;border-radius:14px;padding:2px 10px;font-size:13px;margin:4px 4px 4px 0}
+.mean{color:var(--mut);font-size:14px;margin:2px 0}
+.poster{width:100%;border-radius:14px;margin:10px 0;border:1px solid var(--line);display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0}
+.card.active{outline:3px solid var(--teal);background:var(--act)}
+.sen{font-size:17px;line-height:1.4}.sen b{color:var(--teal)}.tr{font-size:15px;color:var(--mut);margin-top:6px}
+.act{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}.act button{padding:6px 10px;font-size:12px;background:transparent;color:var(--ink);border:1px solid var(--line)}
+.sec{font-weight:bold;margin:16px 0 4px}
+.nav{display:flex;justify-content:space-between;margin:14px 0}.nav a{color:var(--teal);text-decoration:none;font-weight:bold}
+.player{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));z-index:6}
+.pin{max-width:900px;margin:auto}.st{font-size:12px;color:var(--mut);margin-bottom:6px}
+.set{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;margin-bottom:8px;align-items:center}
+.ctl{display:flex;gap:6px}.ctl button{flex:1}.stop{background:#ffe4e6!important;color:#9f1239!important}
+</style></head><body>
+<header><h1 id="ttl">🎧 پوستر صوتی واژگان</h1><a href="#" id="home">فهرست</a></header>
+<main id="app"></main>
+<div class="player" id="pl" hidden><div class="pin">
+<div class="st" id="st">آماده</div>
+<div class="set"><label>سرعت <select id="sp"><option value=".75">0.75x</option><option value="1" selected>1.0x</option><option value="1.2">1.2x</option></select></label>
+<label>زبان <select id="md"><option value="both">EN + TR</option><option value="en">فقط EN</option><option value="tr">فقط TR</option></select></label>
+<label>مکث <select id="gp"><option value="400">0.4s</option><option value="800" selected>0.8s</option><option value="1200">1.2s</option></select></label></div>
+<div class="ctl"><button id="pa">▶️ پخش درس (۱۲ بخش)</button><button class="stop" id="sx">⏹ توقف</button><button id="lp" style="background:var(--line);color:var(--ink)">🔁 خاموش</button></div>
+</div></div>
+<script src="poster-data.js"></script>
+<script>
+const $=s=>document.querySelector(s),L=window.LESSONS,TOTAL=42;
+let token=0,loop=false,running=false,items=[],curL=null;
+const mark=(l,s)=>s.replace(new RegExp("\\b("+l.stem+")","gi"),"<b>$1</b>");
+function home(){stop();$("#pl").hidden=true;$("#ttl").textContent="🎧 پوستر صوتی واژگان";
+$("#app").innerHTML='<div class="grid">'+Array.from({length:TOTAL},(_,i)=>{const l=L[i];return l?`<a class="tile" href="#${i+1}"><b>${i+1}</b><span class="en">${l.word}</span><small>${l.level}</small></a>`:`<div class="tile off"><b>${i+1}</b><span>به‌زودی</span></div>`}).join("")+"</div>"}
+function lesson(n){stop();const l=L[n-1];if(!l)return home();curL=l;
+items=[{en:l.word.toLowerCase(),tr:null,lab:"کلمه"},...l.s.map((s,i)=>({en:s[0],tr:s[1],lab:"جمله "+(i+1)})),{en:l.t[0],tr:l.t[1],lab:"جمله پایانی"}];
+$("#ttl").textContent="درس "+n+" از "+TOTAL;
+const btn=(i,m,t)=>`<button data-i="${i}" data-m="${m}">${t}</button>`;
+$("#app").innerHTML=`<div class="en"><h2>${l.word}</h2><div class="ipa">${l.ipa}</div><span class="meta">${l.pos}</span><span class="meta">${l.level}</span><div class="mean">${l.left} · ${l.right}</div></div>
+<img class="poster" src="${l.img}" alt="${l.word}">
+<div class="card" id="c0"><div class="en sen"><b>${l.word}</b></div><div class="act">${btn(0,"en","EN 🔊")}</div></div>
+${l.s.map((s,i)=>`<div class="card" id="c${i+1}"><div class="en sen">${i+1}. ${mark(l,s[0])}</div><div class="tr">${s[1]}</div><div class="act">${btn(i+1,"en","EN 🔊")}${btn(i+1,"tr","TR 🔊")}${btn(i+1,"both","EN + TR")}</div></div>`).join("")}
+<div class="sec en">Collocations</div>
+${l.c.map(c=>`<div class="card en"><b>${c[0]}</b> → ${c[1]} <div class="act"><button data-e="${c[0]}" data-t="${c[1]}">🔊</button></div></div>`).join("")}
+<div class="card" id="c11"><div class="en sen"><b>${l.t[0]}</b></div><div class="tr">${l.t[1]}</div><div class="act">${btn(11,"en","EN 🔊")}${btn(11,"tr","TR 🔊")}${btn(11,"both","EN + TR")}</div></div>
+<div class="nav"><a href="#${n<L.length?n+1:n}">${n<L.length?"درس بعد ←":""}</a><a href="#${n>1?n-1:1}">${n>1?"→ درس قبل":""}</a></div>`;
+$("#app").querySelectorAll("button[data-i]").forEach(b=>b.onclick=()=>one(+b.dataset.i,b.dataset.m));
+$("#app").querySelectorAll("button[data-e]").forEach(b=>b.onclick=()=>{stop();const t=++token;pair({en:b.dataset.e,tr:b.dataset.t,lab:"کالوکیشن"},t)});
+$("#pl").hidden=false;window.scrollTo(0,0)}
+function stop(){token++;try{speechSynthesis.cancel()}catch(e){}running=false;document.querySelectorAll(".card").forEach(c=>c.classList.remove("active"));$("#st").textContent="آماده";$("#pa").textContent="▶️ پخش درس (۱۲ بخش)"}
+function say(x,lang,t){return new Promise(r=>{if(t!==token)return r(false);if(!("speechSynthesis"in window))return r(false);const u=new SpeechSynthesisUtterance(x);u.lang=lang==="tr"?"tr-TR":"en-US";u.rate=+$("#sp").value;u.onend=()=>r(t===token);u.onerror=()=>r(false);speechSynthesis.speak(u)})}
+const wait=ms=>new Promise(r=>setTimeout(()=>r(true),ms));
+async function pair(it,t,mode){$("#st").textContent=it.lab;const m=mode||$("#md").value;
+if(m!=="tr"||!it.tr){if(!await say(it.en,"en",t))return false}
+if(it.tr&&m==="both"&&!await wait(+$("#gp").value))return false;
+if(it.tr&&m!=="en"){if(!await say(it.tr,"tr",t))return false}return t===token}
+async function one(i,m){stop();const t=++token;const c=$("#c"+i);c&&c.classList.add("active");do{if(!await pair(items[i],t,m))break;if(!loop)break;await wait(900)}while(t===token);if(t===token&&c)c.classList.remove("active")}
+async function full(){stop();const t=++token;running=true;$("#pa").textContent="⏸ توقف درس";
+do{for(let i=0;i<items.length&&t===token;i++){document.querySelectorAll(".card").forEach(c=>c.classList.remove("active"));const c=$("#c"+(i===items.length-1?11:i));c&&(c.classList.add("active"),c.scrollIntoView({block:"center",behavior:"smooth"}));if(!await pair(items[i],t))break;await wait(+$("#gp").value)}
+if(!loop)break;await wait(1200)}while(loop&&t===token);
+if(t===token){running=false;$("#pa").textContent="▶️ پخش درس (۱۲ بخش)";$("#st").textContent="پایان درس"}}
+$("#sx").onclick=stop;$("#pa").onclick=()=>running?stop():full();$("#lp").onclick=()=>{loop=!loop;$("#lp").textContent="🔁 "+(loop?"روشن":"خاموش")};
+$("#home").onclick=e=>{e.preventDefault();location.hash="";route()};
+function route(){const n=parseInt(location.hash.slice(1));n?lesson(n):home()}
+addEventListener("hashchange",route);route();
+</script></body></html>

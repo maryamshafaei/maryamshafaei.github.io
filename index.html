@@ -6,30 +6,9 @@
 <title>Maryam Shafaei | Personal Website</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-  .hero-video {
-  display: block;
-  width: 100%;
-  max-width: 720px;
-  aspect-ratio: 16 / 9;
-  margin: 24px auto;
-  border: 0;
-  border-radius: 12px;
-  }
-  
-.short-video {
-  display: block;
-  width: 100%;
-  max-width: 320px;
-  aspect-ratio: 9 / 16;
-  margin: 20px auto 0;
-  border: 0;
-  border-radius: 12px;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background: #101827;
@@ -38,25 +17,23 @@ body {
 }
 
 header {
-  padding: 22px 8%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 14px 6%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  background: rgba(16, 24, 39, 0.92);
+  backdrop-filter: blur(8px);
   border-bottom: 1px solid #293548;
 }
-
-.logo {
-  color: #b9a3ff;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-nav a {
-  color: #ddd;
-  text-decoration: none;
-  margin-left: 20px;
-  font-size: 14px;
-}
+.logo { color: #b9a3ff; font-size: 20px; font-weight: bold; }
+nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+nav a { color: #ddd; text-decoration: none; font-size: 14px; }
+nav a:hover { color: #c0adff; }
 
 .hero {
   min-height: 75vh;
@@ -68,20 +45,12 @@ nav a {
   padding: 50px 20px;
   background: radial-gradient(circle at top, #29365c, #101827 65%);
 }
-
-.hero h1 {
-  font-size: clamp(32px, 7vw, 55px);
-  margin-bottom: 15px;
-}
-
-.hero h1 span {
-  color: #b9a3ff;
-}
-
-.hero p {
-  color: #c4c8d3;
-  max-width: 550px;
-  margin-bottom: 28px;
+.hero h1 { font-size: clamp(32px, 7vw, 55px); margin-bottom: 15px; }
+.hero h1 span { color: #b9a3ff; }
+.hero p { color: #c4c8d3; max-width: 550px; margin-bottom: 28px; }
+.hero-video {
+  display: block; width: 100%; max-width: 720px; aspect-ratio: 16 / 9;
+  margin: 24px auto; border: 0; border-radius: 12px;
 }
 
 .btn {
@@ -92,26 +61,32 @@ nav a {
   color: white;
   text-decoration: none;
 }
+.btn:hover { background: #8a70e6; }
 
-section {
-  padding: 65px 9%;
-}
+section { padding: 60px 7%; max-width: 1150px; margin: auto; }
+section + section { border-top: 1px solid #1f2b40; }
 
-h2 {
+.section-head { margin-bottom: 28px; }
+.section-head h2 {
   color: #c0adff;
-  margin-bottom: 20px;
-  font-size: 26px;
+  font-size: 28px;
+  margin-bottom: 6px;
+  padding-left: 14px;
+  border-left: 4px solid #9b83ed;
+}
+.section-head p { color: #9ca3af; font-size: 15px; padding-left: 18px; }
+
+.about { max-width: 800px; margin: auto; text-align: center; }
+.about h2 { color: #c0adff; margin-bottom: 20px; font-size: 26px; }
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 26px; }
+.chip {
+  background: #1c293c; border: 1px solid #34415a; color: #c4b5fd;
+  padding: 6px 16px; border-radius: 30px; font-size: 13px;
 }
 
-.about {
-  max-width: 800px;
-  margin: auto;
-  text-align: center;
-}
-
-.projects {
+.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
 }
 
@@ -120,24 +95,31 @@ h2 {
   border: 1px solid #34415a;
   padding: 25px;
   border-radius: 15px;
-}
-
-.card h3 {
-  color: #c0adff;
-  margin-bottom: 10px;
-}
-
-.card p {
-  color: #c4c8d3;
-  font-size: 14px;
-}
-
-.service-actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 28px;
+  flex-direction: column;
+  transition: transform .15s, border-color .15s;
 }
+.card:hover { transform: translateY(-3px); border-color: #6b5bb8; }
+.card h3 { color: #c0adff; margin-bottom: 10px; }
+.card p { color: #c4c8d3; font-size: 14px; margin-bottom: 18px; }
+.card .btn { margin-top: auto; align-self: flex-start; }
+.tag {
+  align-self: flex-start;
+  font-size: 12px;
+  color: #101827;
+  background: #b9a3ff;
+  padding: 1px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.video-card { padding: 16px; }
+.short-video {
+  display: block; width: 100%; max-width: 320px; aspect-ratio: 9 / 16;
+  margin: 0 auto; border: 0; border-radius: 12px;
+}
+.service-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 
 footer {
   text-align: center;
@@ -146,7 +128,6 @@ footer {
   color: #9ca3af;
   font-size: 13px;
 }
-
 </style>
 </head>
 
@@ -156,8 +137,9 @@ footer {
   <div class="logo">Maryam Shafaei</div>
   <nav>
     <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#projects">Projects</a>
+    <a href="#jewelry">Jewelry Videos</a>
+    <a href="#language">Language Learning</a>
+    <a href="#apps">Apps &amp; Tools</a>
   </nav>
 </header>
 
@@ -194,30 +176,31 @@ footer {
     <p style="font-weight:bold; color:#c4b5fd;">
       Always learning. Always creating. Always evolving.
     </p>
+
+    <div class="chips">
+      <span class="chip">Artificial Intelligence</span>
+      <span class="chip">Learning &amp; Development</span>
+      <span class="chip">Creative Ideas</span>
+    </div>
   </div>
 </section>
 
-<section id="services">
-  <h2>Services</h2>
+<section id="jewelry">
+  <div class="section-head">
+    <h2>Jewelry Videos</h2>
+    <p>Artistic videos that show the fine details and character of each piece.</p>
+  </div>
 
-
-  <div class="projects">
-
-    <div class="card">
-      
+  <div class="grid">
+    <div class="card video-card">
       <iframe class="short-video" src="https://www.youtube.com/embed/BetT_KKuJCQ" title="Jewelry video" allowfullscreen loading="lazy"></iframe>
     </div>
-
-    <div class="card">
-  <iframe class="short-video" src="https://www.youtube.com/embed/oZcstMOlP84" title="Jewelry video 2" allowfullscreen loading="lazy"></iframe>
-
+    <div class="card video-card">
+      <iframe class="short-video" src="https://www.youtube.com/embed/oZcstMOlP84" title="Jewelry video 2" allowfullscreen loading="lazy"></iframe>
     </div>
-
-    <div class="card">
+    <div class="card video-card">
       <iframe class="short-video" src="https://www.youtube.com/embed/WekEyco2jNg" title="Tutorial video" allowfullscreen loading="lazy"></iframe>
-      
     </div>
-
   </div>
 
   <div class="service-actions">
@@ -225,34 +208,42 @@ footer {
   </div>
 </section>
 
-<section id="projects">
-  <h2>Interests & Projects</h2>
+<section id="language">
+  <div class="section-head">
+    <h2>Language Learning</h2>
+    <p>Audio-based tools for learning English and Istanbul Turkish.</p>
+  </div>
 
-  <div class="projects">
-
+  <div class="grid">
     <div class="card">
-      <h3>Artificial Intelligence</h3>
+      <span class="tag">100 scenarios</span>
+      <h3>ScenarioLingo</h3>
       <p>
-        Exploring AI tools, technologies,
-        and their creative applications.
+        A scenario-based English and Istanbul Turkish learning book with audio.
+        Practice real-life conversations across 100 scenarios.
       </p>
+      <a class="btn" href="scenario/">Open App</a>
     </div>
 
     <div class="card">
-      <h3>Learning & Development</h3>
+      <span class="tag">42 lessons · 12 words each</span>
+      <h3>Vocabulary Audio Posters</h3>
       <p>
-        Discovering new skills and continuously
-        expanding my knowledge.
+        Illustrated English and Istanbul Turkish vocabulary posters with audio.
+        Every word comes with 10 example sentences.
       </p>
+      <a class="btn" href="audio-poster/vocab.html">Open App</a>
     </div>
+  </div>
+</section>
 
-    <div class="card">
-      <h3>Creative Ideas</h3>
-      <p>
-        Turning interesting ideas into
-        creative and meaningful projects.
-      </p>
-    </div>
+<section id="apps">
+  <div class="section-head">
+    <h2>Apps &amp; Tools</h2>
+    <p>AI-powered web apps and study tools I have built.</p>
+  </div>
+
+  <div class="grid">
     <div class="card">
       <h3>AI Medical Blood Test Assistant</h3>
       <p>
@@ -261,36 +252,23 @@ footer {
       </p>
       <a class="btn" href="blood-test/">Open App</a>
     </div>
-  
-<div class="card">
-    <h3>Hamyar Dars</h3>
-    <p>
+
+    <div class="card">
+      <h3>Hamyar Dars</h3>
+      <p>
         An AI-powered study assistant designed to help students learn more effectively.
-    </p>
-    <a class="btn" href="https://hamyar-dars-u3mw.onrender.com" target="_blank" rel="noopener noreferrer">Open App</a>
-</div>
-   <div class="card">
-    <h3>Concept House Designer</h3>
-    <p>
+      </p>
+      <a class="btn" href="https://hamyar-dars-u3mw.onrender.com" target="_blank" rel="noopener noreferrer">Open App</a>
+    </div>
+
+    <div class="card">
+      <h3>Concept House Designer</h3>
+      <p>
         A web app that turns a land plot and your needs into several concept house layouts
         and compares them by daylight, privacy, space and circulation. Available in Persian, English and Turkish.
-    </p>
-    <a class="btn" href="home-designer/">Open App</a>
-   </div>   
-    <div class="card">
-    <h3>ScenarioLingo</h3>
-    <p>
-      A scenario-based English and Istanbul Turkish learning book with audio. Practice real-life conversations across 100 scenarios.
-    </p>
-    <a class="btn" href="scenario/">Open App</a>
+      </p>
+      <a class="btn" href="home-designer/">Open App</a>
     </div>
-        <div class="card">
-    <h3>Vocabulary Audio Posters</h3>
-    <p>
-      Illustrated English and Istanbul Turkish vocabulary posters with audio. 42 lessons, 12 words each.
-    </p>
-    <a class="btn" href="audio-poster/vocab.html">Open App</a>
-        </div>
   </div>
 </section>
 

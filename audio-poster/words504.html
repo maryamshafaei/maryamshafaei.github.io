@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" dir="ltr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>504 Essential Words | Audio Posters</title>
+<style>
+:root{--bg:#edf3f5;--card:#fff;--ink:#203344;--mut:#536574;--navy:#184352;--line:#cbd9df;--act:#e5f8f4;--teal:#0d9488;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1c24;--card:#182a35;--ink:#e6eef2;--mut:#9db3bf;--navy:#2b6277;--line:#2c4452;--act:#12403c}}
+*{box-sizing:border-box}html{scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif;padding-bottom:30px}
+body.w{padding-bottom:150px}
+.en{font-family:Arial,sans-serif;direction:ltr;text-align:left}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--navy);color:#fff;padding:12px 16px;z-index:5;display:flex;justify-content:space-between;align-items:center}
+header h1{font-size:17px;margin:0}header a{color:#fff;text-decoration:none;font-size:14px}
+main{max-width:900px;margin:auto;padding:12px}
+button,select{font:inherit;cursor:pointer}button{border:0;border-radius:10px;padding:9px 12px;font-weight:bold;background:var(--navy);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(min-width:600px){.grid{grid-template-columns:repeat(6,1fr)}}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:4px;min-height:84px;justify-content:center}
+.tile b{font-size:18px;color:var(--teal)}.tile span{font-size:13px;font-weight:bold}.tile small{color:var(--mut)}
+.tile.off{opacity:.45}
+h2{margin:6px 0 2px;font-size:30px}.ipa{color:var(--mut);font-size:18px}
+.meta{display:inline-block;background:var(--navy);color:#fff;border-radius:14px;padding:2px 10px;font-size:13px;margin:4px 4px 4px 0}
+.mean{color:var(--mut);font-size:14px;margin:2px 0}
+.poster{width:100%;border-radius:14px;margin:10px 0;border:1px solid var(--line);display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0}
+.card.active{outline:3px solid var(--teal);background:var(--act)}
+.sen{font-size:17px;line-height:1.4}.sen b{color:var(--teal)}.tr{font-size:15px;color:var(--mut);margin-top:6px}
+.act{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}.act button{padding:6px 10px;font-size:12px;background:transparent;color:var(--ink);border:1px solid var(--line)}
+.sec{font-weight:bold;margin:16px 0 4px}
+.nav{display:flex;justify-content:space-between;gap:8px;margin:14px 0;flex-wrap:wrap}.nav a{color:var(--teal);text-decoration:none;font-weight:bold}
+footer{text-align:center;padding:22px 12px;font-size:14px}footer a{color:var(--teal);text-decoration:none;font-weight:bold}
+.player{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));z-index:6}
+.pin{max-width:900px;margin:auto}.st{font-size:12px;color:var(--mut);margin-bottom:6px}
+.set{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;margin-bottom:8px;align-items:center}
+.ctl{display:flex;gap:6px}.ctl button{flex:1}.stop{background:#ffe4e6!important;color:#9f1239!important}
+</style></head><body>
+<header><h1 id="ttl">🎧 504 Essential Words</h1><a href="#" id="home">Home</a></header>
+<main id="app"></main>
+<footer><a href="https://www.youtube.com/@EnglishWithMaryamshafaei" target="_blank" rel="noopener noreferrer">▶ Watch these posters on YouTube: @EnglishWithMaryamshafaei</a></footer>
+<div class="player" id="pl" hidden><div class="pin">
+<div class="st" id="st">Ready</div>
+<div class="set"><label>Speed <select id="sp"><option value=".75">0.75x</option><option value="1" selected>1.0x</option><option value="1.2">1.2x</option></select></label>
+<label>Language <select id="md"><option value="both">EN + TR</option><option value="en">EN only</option><option value="tr">TR only</option></select></label>
+<label>Pause <select id="gp"><option value="400">0.4s</option><option value="800" selected>0.8s</option><option value="1200">1.2s</option></select></label></div>
+<div class="ctl"><button id="pa">▶️ Play word</button><button class="stop" id="sx">⏹ Stop</button><button id="lp" style="background:var(--line);color:var(--ink)">🔁 Off</button></div>
+</div></div>
+<script>
+const $=s=>document.querySelector(s),TOTAL=42,pad=n=>String(n).padStart(2,"0");
+window.LD=window.LD||{};
+let token=0,loop=false,running=false,items=[];
+const mark=(l,s)=>s.replace(new RegExp("\\b("+l.stem+")","gi"),"<b>$1</b>");
+function load(n){return new Promise((res,rej)=>{if(LD[n])return res(LD[n]);const s=document.createElement("script");s.src="lesson-"+pad(n)+".js";s.onload=()=>LD[n]?res(LD[n]):rej();s.onerror=rej;document.head.appendChild(s)})}
+function off(n){const t=$("#t"+n);if(!t)return;t.classList.add("off");t.removeAttribute("href");t.querySelector("small").textContent="Coming soon"}
+function home(){stop();document.body.classList.remove("w");$("#pl").hidden=true;$("#ttl").textContent="🎧 504 Essential Words";
+$("#app").innerHTML='<div class="grid">'+Array.from({length:TOTAL},(_,i)=>`<a class="tile" id="t${i+1}" href="#L${i+1}"><b>${i+1}</b><span>Lesson ${i+1}</span><small>12 words</small></a>`).join("")+"</div>";
+for(let n=1;n<=TOTAL;n++)fetch("lesson-"+pad(n)+".js",{method:"HEAD"}).then(r=>{if(!r.ok)off(n)}).catch(()=>{})}
+function lessonView(n){stop();document.body.classList.remove("w");$("#pl").hidden=true;$("#ttl").textContent="Lesson "+n;$("#app").innerHTML='<div class="mean">Loading…</div>';
+load(n).then(W=>{$("#app").innerHTML='<div class="nav"><a href="#">← All lessons</a></div><div class="grid">'+W.map((w,i)=>`<a class="tile" href="#W${n}-${i+1}"><b>${i+1}</b><span class="en">${w.word}</span><small>${w.level}</small></a>`).join("")+"</div>";window.scrollTo(0,0)}).catch(()=>{$("#app").innerHTML='<div class="card">This lesson is not ready yet.</div><div class="nav"><a href="#">← All lessons</a></div>'})}
+function wordView(n,k){stop();$("#app").innerHTML='<div class="mean">Loading…</div>';
+load(n).then(W=>{const l=W[k-1];if(!l)return lessonView(n);
+items=[{en:l.word.toLowerCase(),tr:null,lab:"Word"},...l.s.map((s,i)=>({en:s[0],tr:s[1],lab:"Sentence "+(i+1)})),{en:l.t[0],tr:l.t[1],lab:"Closing line"}];
+$("#ttl").textContent="Lesson "+n+" · Word "+k+" of "+W.length;
+const btn=(i,m,t)=>`<button data-i="${i}" data-m="${m}">${t}</button>`;
+$("#app").innerHTML=`<div class="nav"><a href="#L${n}">← Words in lesson ${n}</a></div><div class="en"><h2>${l.word}</h2><div class="ipa">${l.ipa}</div><span class="meta">${l.pos}</span><span class="meta">${l.level}</span><div class="mean">${l.left} · ${l.right}</div></div>
+<img class="poster" src="${l.img}" alt="${l.word}">
+<div class="card" id="c0"><div class="en sen"><b>${l.word}</b></div><div class="act">${btn(0,"en","EN 🔊")}</div></div>
+${l.s.map((s,i)=>`<div class="card" id="c${i+1}"><div class="en sen">${i+1}. ${mark(l,s[0])}</div><div class="tr">${s[1]}</div><div class="act">${btn(i+1,"en","EN 🔊")}${btn(i+1,"tr","TR 🔊")}${btn(i+1,"both","EN + TR")}</div></div>`).join("")}
+<div class="sec en">Collocations</div>
+${l.c.map(c=>`<div class="card en"><b>${c[0]}</b> → ${c[1]} <div class="act"><button data-e="${c[0]}" data-t="${c[1]}">🔊</button></div></div>`).join("")}
+<div class="card" id="c11"><div class="en sen"><b>${l.t[0]}</b></div><div class="tr">${l.t[1]}</div><div class="act">${btn(11,"en","EN 🔊")}${btn(11,"tr","TR 🔊")}${btn(11,"both","EN + TR")}</div></div>
+<div class="nav"><a href="#${k>1?"W"+n+"-"+(k-1):"L"+n}">${k>1?"← Previous word":""}</a><a href="#${k<W.length?"W"+n+"-"+(k+1):"L"+n}">${k<W.length?"Next word →":"End of lesson →"}</a></div>`;
+$("#app").querySelectorAll("button[data-i]").forEach(b=>b.onclick=()=>one(+b.dataset.i,b.dataset.m));
+$("#app").querySelectorAll("button[data-e]").forEach(b=>b.onclick=()=>{stop();const t=++token;pair({en:b.dataset.e,tr:b.dataset.t,lab:"Collocation"},t)});
+document.body.classList.add("w");$("#pl").hidden=false;window.scrollTo(0,0)}).catch(()=>lessonView(n))}
+function stop(){token++;try{speechSynthesis.cancel()}catch(e){}running=false;document.querySelectorAll(".card").forEach(c=>c.classList.remove("active"));$("#st").textContent="Ready";$("#pa").textContent="▶️ Play word"}
+function say(x,lang,t){return new Promise(r=>{if(t!==token)return r(false);if(!("speechSynthesis"in window)||!window.speechSynthesis){$("#st").textContent="⚠️ This browser does not support audio playback";return r(false)}const u=new SpeechSynthesisUtterance(x);u.lang=lang==="tr"?"tr-TR":"en-US";u.rate=+$("#sp").value;u.onend=()=>r(t===token);u.onerror=e=>{$("#st").textContent="⚠️ Audio error: "+(e.error||"unknown");r(false)};speechSynthesis.speak(u)})}
+const wait=ms=>new Promise(r=>setTimeout(()=>r(true),ms));
+async function pair(it,t,mode){$("#st").textContent=it.lab;const m=mode||$("#md").value;
+if(m!=="tr"||!it.tr){if(!await say(it.en,"en",t))return false}
+if(it.tr&&m==="both"&&!await wait(+$("#gp").value))return false;
+if(it.tr&&m!=="en"){if(!await say(it.tr,"tr",t))return false}return t===token}
+async function one(i,m){stop();const t=++token;const c=$("#c"+i);c&&c.classList.add("active");do{if(!await pair(items[i],t,m))break;if(!loop)break;await wait(900)}while(t===token);if(t===token&&c)c.classList.remove("active")}
+async function full(){stop();const t=++token;running=true;$("#pa").textContent="⏸ Pause";
+do{for(let i=0;i<items.length&&t===token;i++){document.querySelectorAll(".card").forEach(c=>c.classList.remove("active"));const c=$("#c"+(i===items.length-1?11:i));c&&(c.classList.add("active"),c.scrollIntoView({block:"center",behavior:"smooth"}));if(!await pair(items[i],t))break;await wait(+$("#gp").value)}
+if(!loop)break;await wait(1200)}while(loop&&t===token);
+if(t===token){running=false;$("#pa").textContent="▶️ Play word";$("#st").textContent="Done"}}
+$("#sx").onclick=stop;$("#pa").onclick=()=>running?stop():full();$("#lp").onclick=()=>{loop=!loop;$("#lp").textContent="🔁 "+(loop?"On":"Off")};
+$("#home").onclick=e=>{e.preventDefault();location.hash="";route()};
+function route(){const h=location.hash.slice(1);let m;if(m=h.match(/^W(\d+)-(\d+)$/))wordView(+m[1],+m[2]);else if(m=h.match(/^L(\d+)$/))lessonView(+m[1]);else home()}
+addEventListener("hashchange",route);route();
+</script></body></html>
